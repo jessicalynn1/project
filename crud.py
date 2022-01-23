@@ -23,7 +23,7 @@ def get_user_by_email(email):
         If true, return user. 
         If false, return None."""
     
-    return User.query.filter(User.email == email).first()
+    return User.query.filter_by(email = email).first()
 
 def check_user_password(email, password):
     """If password entered matches password in databse, return True.
@@ -34,16 +34,17 @@ def check_user_password(email, password):
     if user.password == password:
         return user.user_id
     else:
-        return False
+        return None
         
-def all_forms_list():
+def all_forms_by_user(user_id):
     """Shows all itineraries of one user."""
 
-    return Form.query.filter(user_id == id).all()
+    return Form.query.filter(Form.user_id == user_id).all()
 
-# def get_result():
-#     """Show dream day result"""
+def get_result(category_id):
+    """Show dream day result"""
 
+    return Category.query.filter(Category.category_id == category_id).first()
 
 if __name__ == '__main__':
     from server import app
