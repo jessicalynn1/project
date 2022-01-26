@@ -76,7 +76,36 @@ def form_page ():
 def results_page ():
     """Shows the results of form"""
 
-    return render_template("results.html")
+    q1_answer = request.args.get("question-1")
+    q2_answer = request.args.get("question-2")
+    q3_answer = request.args.get("question-3")
+    q4_answer = request.args.get("question-4")
+    q5_answer = request.args.get("question-5")
+    q6_answer = request.args.get("question-6")
+    q7_answer = request.args.get("question-7")
+
+    itinerary_1 = []
+    itinerary_2 = []
+    itinerary_3 = []
+    itinerary_4 = []
+
+    # if q1_answer is value="Adults; no kids":
+    #     itinerary_1 += 1
+
+    # if q1_answer is value="Family; kids under 8":
+    #     itinerary_2 += 1
+
+    # if q1_answer is value="Family; kids over 8":
+    #     itinerary_3 += 1
+
+    # if q1_answer is value="Large group, 6+":
+    #     itinerary_4 += 1
+
+
+
+    # if q3_answer is value="yes":
+
+
 
 @app.route("/user_itinerary")
 def user_itinerary ():

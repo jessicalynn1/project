@@ -9,20 +9,21 @@
     <h2>Let's plan your dream day!</h2>
     <h3>Please fill out the form below.</h3>
   
-    <form>
+
+    <form name="question-1">
         Tell me about your travel group.
-    <br>
-    <select name="question1">
+        <br>
+        <br>
         <option value="Adults; no kids">Adults; no kids</option>
         <option value="Family; kids under 8">Family; kids under 8</option>
         <option value="Family; kids over 8">Family; kids over 8</option>
         <option value="Large group, 6+">Large group, 6+</option>
-    </select>
   </form>
   <br>
 
-    <form name="question2">
+    <form name="question-2">
         What will the weather be like?
+    <br>
     <br>
     <input type="radio" name="weather" value="hot">
         <label> Sunny and warm </label>
@@ -31,10 +32,11 @@
     </form>
     <br>
 
-    <form name="question3">
+    <form name="question-3">
         Do you like dark rides?
     <br>
     for example: Haunted Mansion, The Many Adventures of Winnie the Pooh, Peter Pan's Flight
+    <br>
     <br>
     <input type="radio" name="dark-ride" value="yes">
         <label> Yes </label>
@@ -43,10 +45,11 @@
     </form>
     <br>
 
-    <form name="question4">
+    <form name="question-4">
         Do you like thrill rides?
     <br>
     for example: Matterhorn Bobsleds, Big Thunder Mountain Railroad, Space Mountain
+    <br>
     <br>
     <input type="radio" name="thrill-ride" value="yes">
         <label> Yes </label>
@@ -55,10 +58,11 @@
     </form>
     <br>
     
-    <form name="question5">
+    <form name="question-5">
         Do you get motion sick easily?
     <br>
     for example: Mad Tea Party, Finding Nemo Submarine Voyage, Star Tours - The Adventures Continue
+    <br>
     <br>
     <input type="radio" name="motion-sick" value="yes">
         <label> Yes </label>
@@ -67,10 +71,11 @@
     </form>
     <br>
 
-    <form name="question6">
+    <form name="question-6">
         Are you just here for the food, ambiance and pictures?
     <br>
     for example: Club 33, Tiki Juice Bar, Blue Bayou, Mint Julep Bar
+    <br>
     <br>
     <input type="radio" name="thrill-ride" value="yes">
         <label> Yes </label>
@@ -79,8 +84,9 @@
     </form>
     <br>
 
-    <form name="question7">
+    <form name="question-7">
        Which ride(s) do you have to go on?
+    <br>
     <br>
     <input type="text" name="must-ride1">
     <br>
@@ -90,9 +96,9 @@
     </form>
     <br>
 
-    <h3>Once you have completed the form, please hit the submit button.</h3>
+    <h4>Once you have completed the form, please hit the submit button.</h4>
     <br>
 
-    <input type="submit" />
+    <input type="submit">
   </form>
 {% endblock %}
