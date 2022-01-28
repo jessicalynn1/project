@@ -4,96 +4,87 @@
 
 {% block body %}
   <h1> Welcome, User_name</h1>
-        <!-- Need to figure out how to get user_name to populate -->
+        <!-- Need to figure out how to get user_name to populate 
+        if this condition, flash user_name-->
 
     <h2>Let's plan your dream day!</h2>
     <h3>Please fill out the form below.</h3>
   
-
-    <form name="question-1">
-        Tell me about your travel group.
-        <br>
-        <br>
+    <form>
+  
+        <p>Tell me about your travel group.</p>
+    
+        <select name='question-1'>
         <option value="Adults; no kids">Adults; no kids</option>
         <option value="Family; kids under 8">Family; kids under 8</option>
         <option value="Family; kids over 8">Family; kids over 8</option>
         <option value="Large group, 6+">Large group, 6+</option>
-  </form>
-  <br>
+    </select>
+    <br>
 
-    <form name="question-2">
-        What will the weather be like?
-    <br>
-    <br>
-    <input type="radio" name="weather" value="hot">
+    <p>
+        What will the weather be like?</p>
+
+    <input type="radio" id="warm-weather" name="question-2" value="hot">
         <label> Sunny and warm </label>
-    <input type="radio" name="weather" value="not hot">
+    <input type="radio" id="cool-weather" name="question-2" value="not hot">
         <label> Cool and cloudy </label>
-    </form>
     <br>
 
-    <form name="question-3">
+    <p>
         Do you like dark rides?
     <br>
-    for example: Haunted Mansion, The Many Adventures of Winnie the Pooh, Peter Pan's Flight
-    <br>
-    <br>
-    <input type="radio" name="dark-ride" value="yes">
+    for example: Haunted Mansion, The Many Adventures of Winnie the Pooh, Peter Pan's Flight</p>
+
+    <input type="radio" id="yes-dark" name="question-3" value="yes">
         <label> Yes </label>
-    <input type="radio" name="dark-ride" value="no">
+    <input type="radio" id="no-dark" name="question-3" value="no">
         <label> No </label>
-    </form>
     <br>
 
-    <form name="question-4">
+    <p>
         Do you like thrill rides?
     <br>
-    for example: Matterhorn Bobsleds, Big Thunder Mountain Railroad, Space Mountain
-    <br>
-    <br>
-    <input type="radio" name="thrill-ride" value="yes">
+    for example: Matterhorn Bobsleds, Big Thunder Mountain Railroad, Space Mountain</p>
+
+    <input type="radio" id="yes-thrill" name="question-4" value="yes">
         <label> Yes </label>
-    <input type="radio" name="thrill-ride" value="no">
+    <input type="radio" id="no-thrill" name="question-4" value="no">
         <label> No </label>
-    </form>
     <br>
     
-    <form name="question-5">
+
+    <p>
         Do you get motion sick easily?
     <br>
-    for example: Mad Tea Party, Finding Nemo Submarine Voyage, Star Tours - The Adventures Continue
-    <br>
-    <br>
-    <input type="radio" name="motion-sick" value="yes">
+    for example: Mad Tea Party, Finding Nemo Submarine Voyage, Star Tours - The Adventures Continue</p>
+
+    <input type="radio" id="yes-sick" name="question-5" value="yes">
         <label> Yes </label>
-    <input type="radio" name="motion-sick" value="no">
+    <input type="radio" id="no-sick" name="question-5" value="no">
         <label> No </label>
-    </form>
     <br>
 
-    <form name="question-6">
-        Are you just here for the food, ambiance and pictures?
+
+    <p>Are you just here for the food, ambiance and pictures?
     <br>
-    for example: Club 33, Tiki Juice Bar, Blue Bayou, Mint Julep Bar
-    <br>
-    <br>
-    <input type="radio" name="thrill-ride" value="yes">
+    for example: Club 33, Tiki Juice Bar, Blue Bayou, Mint Julep Bar</p>
+
+    <input type="radio" id="yes-ride" name="question-6" value="yes">
         <label> Yes </label>
-    <input type="radio" name="thrill-ride" value="no">
+    <input type="radio" id="no-ride" name="question-6" value="no">
         <label> No </label>
-    </form>
     <br>
 
-    <form name="question-7">
+    <br>
        Which ride(s) do you have to go on?
     <br>
     <br>
-    <input type="text" name="must-ride1">
+    <input type="text" name="question-7">
     <br>
-    <input type="text" name="must-ride2">
+    <input type="text" name="question-7">
     <br>
-    <input type="text" name="must-ride3">
-    </form>
+    <input type="text" name="question-7">
     <br>
 
     <h4>Once you have completed the form, please hit the submit button.</h4>

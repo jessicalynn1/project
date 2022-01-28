@@ -6,6 +6,8 @@ from model import connect_to_db, db
 import crud
 
 from jinja2 import StrictUndefined
+import webbrowser
+
 
 app = Flask(__name__)
 app.secret_key = "dev"
@@ -14,7 +16,7 @@ app.jinja_env.undefined = StrictUndefined
 
 
 @app.route("/")
-def welcome_page ():
+def welcome_page():
     """Show the Welcome page"""
 
     return render_template("homepage.html")
@@ -61,28 +63,34 @@ def log_in():
     return redirect("/")
 
 @app.route("/rides")
-def rides_page ():
+def rides_page():
     """Show the rides page"""
+
+    # this is where i would call the api, very similar to js fetch call
+    disney_data = webbrowser.open_new('https://api.themeparks.wiki/preview/parks/DisneylandResortMagicKingdom/waittime')
+
+    for ride in disney_data:
+        print(disney_data['name'])
 
     return render_template("rides.html")  #just for me to look at
 
 @app.route("/form")
-def form_page ():
+def form_page():
     """Loads form for user"""
 
     return render_template("form.html")
 
-@app.route("/results")
-def results_page ():
+@app.route("/results", methods=['POST'])
+def results_page():
     """Shows the results of form"""
 
-    q1_answer = request.args.get("question-1")
-    q2_answer = request.args.get("question-2")
-    q3_answer = request.args.get("question-3")
-    q4_answer = request.args.get("question-4")
-    q5_answer = request.args.get("question-5")
-    q6_answer = request.args.get("question-6")
-    q7_answer = request.args.get("question-7")
+    answer_1 = request.form.get("question-1")
+    answer_2 = request.form.get("question-2")
+    answer_3 = request.form.get("question-3")
+    answer_4 = request.form.get("question-4")
+    answer_5 = request.form.get("question-5")
+    answer_6 = request.form.get("question-6")
+    answer_7 = request.form.getlist("question-7")
 
     itinerary_1 = []
     itinerary_2 = []
