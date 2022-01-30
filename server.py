@@ -1,13 +1,14 @@
 """this is where you set up routes (to web pages); routes include functions that return render_templates to html pages"""
 
-from flask import (Flask, render_template, request, flash, session,
-                   redirect)
+from flask import (Flask, render_template, request, flash, session, redirect, jsonify)
 from model import connect_to_db, db
 import crud
 
 from jinja2 import StrictUndefined
 import webbrowser
-
+import requests
+import json 
+from pprint import pprint
 
 app = Flask(__name__)
 app.secret_key = "dev"
@@ -67,12 +68,19 @@ def rides_page():
     """Show the rides page"""
 
     # this is where i would call the api, very similar to js fetch call
-    disney_data = webbrowser.open_new('https://api.themeparks.wiki/preview/parks/DisneylandResortMagicKingdom/waittime')
+    # 'https://api.themeparks.wiki/preview/parks/DisneylandResortMagicKingdom/waittime'
 
-    for ride in disney_data:
-        print(disney_data['name'])
+    # for ride in disney_data:
+    #     print(disney_data['name'])
+
+
+    # this worked below
+    # res = requests.get('https://api.themeparks.wiki/preview/parks/DisneylandResortMagicKingdom/waittime')
+    # response = res.json()
+    # pprint(response)
 
     return render_template("rides.html")  #just for me to look at
+# , rides=response
 
 @app.route("/form")
 def form_page():
@@ -97,16 +105,16 @@ def results_page():
     itinerary_3 = []
     itinerary_4 = []
 
-    # if q1_answer is value="Adults; no kids":
+    # if answer_1 is value="Adults; no kids":
     #     itinerary_1 += 1
 
-    # if q1_answer is value="Family; kids under 8":
+    # if answer_1 is value="Family; kids under 8":
     #     itinerary_2 += 1
 
-    # if q1_answer is value="Family; kids over 8":
+    # if answer_1 is value="Family; kids over 8":
     #     itinerary_3 += 1
 
-    # if q1_answer is value="Large group, 6+":
+    # if answer_1 is value="Large group, 6+":
     #     itinerary_4 += 1
 
 
@@ -118,6 +126,8 @@ def results_page():
 @app.route("/user_itinerary")
 def user_itinerary ():
     """User's first page upon second login"""
+
+
 
     return render_template("user_itinerary.html")
 
