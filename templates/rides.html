@@ -7,14 +7,12 @@
 <section id="ride-list">
     <h1>List of Rides at Disneyland Resort</h1>
     <ol id="rides">
-    {# <!-- {% for ride in rides %}
+    {% for ride in rides %}
     <li> {{ ride.get('name') }} </li>
-    {% endfor %} --> #}
-    </ol>
+    {% endfor %}
   </section>
 
   <script src="/static/api_client.js"></script>
-
 
 </body>
 

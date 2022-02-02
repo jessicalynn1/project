@@ -3,7 +3,7 @@
 {% extends 'base.html' %}
 
 {% block body %}
-  <h1> Welcome, {{ user_name }} </h1>
+  <h1> Welcome, {% user_name %} </h1>
         <!-- Need to figure out how to get user_name to populate 
         if this condition, flash user_name-->
 
@@ -14,7 +14,7 @@
   
         <p>Tell me about your travel group.</p>
     
-        <select name='question-1'>
+        <select name='q_travel_grp'>
         <option value="Adults; no kids">Adults; no kids</option>
         <option value="Family; kids under 8">Family; kids under 8</option>
         <option value="Family; kids over 8">Family; kids over 8</option>
@@ -25,9 +25,9 @@
     <p>
         What will the weather be like?</p>
 
-    <input type="radio" id="warm-weather" name="question-2" value="hot">
+    <input type="radio" id="warm-weather" name="q_weather" value="hot">
         <label> Sunny and warm </label>
-    <input type="radio" id="cool-weather" name="question-2" value="not hot">
+    <input type="radio" id="cool-weather" name="q_weather" value="not hot">
         <label> Cool and cloudy </label>
     <br>
 
@@ -36,9 +36,9 @@
     <br>
     for example: Haunted Mansion, The Many Adventures of Winnie the Pooh, Peter Pan's Flight</p>
 
-    <input type="radio" id="yes-dark" name="question-3" value="yes">
+    <input type="radio" id="yes-dark" name="q_dark_ride" value="yes">
         <label> Yes </label>
-    <input type="radio" id="no-dark" name="question-3" value="no">
+    <input type="radio" id="no-dark" name="q_dark_ride" value="no">
         <label> No </label>
     <br>
 
@@ -47,9 +47,9 @@
     <br>
     for example: Matterhorn Bobsleds, Big Thunder Mountain Railroad, Space Mountain</p>
 
-    <input type="radio" id="yes-thrill" name="question-4" value="yes">
+    <input type="radio" id="yes-thrill" name="q_thrill_ride" value="yes">
         <label> Yes </label>
-    <input type="radio" id="no-thrill" name="question-4" value="no">
+    <input type="radio" id="no-thrill" name="q_thrill_ride" value="no">
         <label> No </label>
     <br>
     
@@ -59,9 +59,9 @@
     <br>
     for example: Mad Tea Party, Finding Nemo Submarine Voyage, Star Tours - The Adventures Continue</p>
 
-    <input type="radio" id="yes-sick" name="question-5" value="yes">
+    <input type="radio" id="yes-sick" name="q_motion_sick" value="yes">
         <label> Yes </label>
-    <input type="radio" id="no-sick" name="question-5" value="no">
+    <input type="radio" id="no-sick" name="q_motion_sick" value="no">
         <label> No </label>
     <br>
 
@@ -70,9 +70,9 @@
     <br>
     for example: Club 33, Tiki Juice Bar, Blue Bayou, Mint Julep Bar</p>
 
-    <input type="radio" id="yes-ride" name="question-6" value="yes">
+    <input type="radio" id="yes-ride" name="q_foodie" value="yes">
         <label> Yes </label>
-    <input type="radio" id="no-ride" name="question-6" value="no">
+    <input type="radio" id="no-ride" name="q_foodie" value="no">
         <label> No </label>
     <br>
 
@@ -80,11 +80,11 @@
        Which ride(s) do you have to go on?
     <br>
     <br>
-    <input type="text" name="question-7">
+    <input type="text" name="q_must_ride">
     <br>
-    <input type="text" name="question-7">
+    <input type="text" name="q_must_ride">
     <br>
-    <input type="text" name="question-7">
+    <input type="text" name="q_must_ride">
     <br>
 
     <h4>Once you have completed the form, please hit the submit button.</h4>

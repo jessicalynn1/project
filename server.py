@@ -67,20 +67,13 @@ def log_in():
 def rides_page():
     """Show the rides page"""
 
-    # this is where i would call the api, very similar to js fetch call
-    # 'https://api.themeparks.wiki/preview/parks/DisneylandResortMagicKingdom/waittime'
 
-    # for ride in disney_data:
-    #     print(disney_data['name'])
+    res = requests.get('https://api.themeparks.wiki/preview/parks/DisneylandResortMagicKingdom/waittime')
+    response = res.json()
+    pprint(response)
 
+    return render_template("rides.html", rides=response)
 
-    # this worked below
-    # res = requests.get('https://api.themeparks.wiki/preview/parks/DisneylandResortMagicKingdom/waittime')
-    # response = res.json()
-    # pprint(response)
-
-    return render_template("rides.html")  #just for me to look at
-# , rides=response
 
 @app.route("/form")
 def form_page():
@@ -92,18 +85,20 @@ def form_page():
 def results_page():
     """Shows the results of form"""
 
-    answer_1 = request.form.get("question-1")
-    answer_2 = request.form.get("question-2")
-    answer_3 = request.form.get("question-3")
-    answer_4 = request.form.get("question-4")
-    answer_5 = request.form.get("question-5")
-    answer_6 = request.form.get("question-6")
-    answer_7 = request.form.getlist("question-7")
+    a_travel_grp = request.form.get("q_travel_grp")
+    a_weather = request.form.get("q_weather")
+    a_dark_ride = request.form.get("q_dark_ride")
+    a_thrill_ride = request.form.get("q_thrill_ride")
+    a_motion_sick = request.form.get("q_motion_sick")
+    a_foodie = request.form.get("q_foodie")
+    a_must_ride = request.form.getlist("q_must_ride")
 
     itinerary_1 = []
     itinerary_2 = []
     itinerary_3 = []
     itinerary_4 = []
+
+    water_rides = []   #variable to hold water rides, can exclude them if weather is cold
 
     # if answer_1 is value="Adults; no kids":
     #     itinerary_1 += 1
@@ -121,6 +116,11 @@ def results_page():
 
     # if q3_answer is value="yes":
 
+@app.route("/itinerary_no_kids")
+def itinerary_no_kids():
+    """Show itinerary - No Kids"""
+
+    return render_template("itinerary_no_kids.html")
 
 
 @app.route("/user_itinerary")

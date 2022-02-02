@@ -9,7 +9,7 @@ class User(db.Model):
 
     __tablename__ = 'users'
 
-    user_id = db.Column(db.Integer,
+    id = db.Column(db.Integer,
                         autoincrement=True,
                         primary_key=True)
     user_name = db.Column(db.String, unique=False)
@@ -25,21 +25,21 @@ class Form(db.Model):
 
     __tablename__ = 'form'
 
-    form_id = db.Column(db.Integer,
+    id = db.Column(db.Integer,
                         autoincrement=True,
                         primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
-    question1 = db.Column(db.String)
-    question2 = db.Column(db.String)
-    question3 = db.Column(db.Boolean)
-    question4 = db.Column(db.Boolean)
-    question5 = db.Column(db.Boolean)
-    question6 = db.Column(db.Boolean)
-    question7 = db.Column(db.String)
+    category_id = db.Column(db.Integer, db.ForeignKey("category.category_id"))
+    q_travel_grp = db.Column(db.String)
+    q_weather = db.Column(db.String)
+    q_dark_ride = db.Column(db.Boolean)
+    q_thrill_ride = db.Column(db.Boolean)
+    q_motion_sick = db.Column(db.Boolean)
+    q_foodie = db.Column(db.Boolean)
+    q_must_ride = db.Column(db.String)
     question8 = db.Column(db.String)
     question9 = db.Column(db.String)
     question10 = db.Column(db.String)
-    category_id = db.Column(db.Integer, db.ForeignKey("category.category_id"))
 
     user = db.relationship("User", backref="form")
     category = db.relationship("Category", backref="form")
