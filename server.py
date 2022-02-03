@@ -98,7 +98,17 @@ def results_page():
     itinerary_3 = []
     itinerary_4 = []
 
-    water_rides = []   #variable to hold water rides, can exclude them if weather is cold
+    water_rides = ('Splash Mountain', 'Davy Crocketts Explorer Canoes', 'Storybook Land Canal Boats', 'Jungle Cruise')   #variable to hold water rides, can exclude them if weather is cold
+    kid_rides = ('Roger Rabbits Car Toon Spin', 'Casey Jr. Circus Train', 'Mickeys House and Meet Mickey', 'Autopia'
+    'Gadgets Go Coaster', 'Dumbo the Flying Elephant', 'Astro Orbitor', 'King Arthur Carousel', 'Many Adventures of Winnie the Pooh')
+    dark_rides = ('Haunted Mansion', 'Peter Pans Flight', 'Many Adventures of Winnie the Pooh', 
+    'Snow Whites Enchanted Wish', 'Pirates of the Caribbean', 'Its a small world', 'Mr Toads Wild Ride', 'Roger Rabbits Car Toon Spin')
+    thrill_rides = ('Matterhorn Bobsleds', 'Big Thunder Mountain Railroad', 'Star Wars: Rise of the Resistance', 'Space Mountain', 'Indiana Jones Adventure', 'Splash Mountain', '')
+    motion_rides = ('Millenium Falcon: Smugglers Run', 'Star Tours - The Adventures Continue', 'Finding Nemo Submarine Voyage', 'Space Mountain', 'Mad Tea Party')
+    large_group_rides = ('Jungle Cruise', 'Its a small world', 'Pirates of the Caribbean', 'Haunted Mansion', 'Pirates Lair on Tom Sawyer Island', 
+    'Many Adventures of Winnie the Pooh', 'Walt Disneys Enchanted Tiki Room')
+    no_rides = ('Walt Disneys Enchanted Tiki Room', 'Blue Bayou Restaurant', 'Ogas Cantina at the Disneyland Resort', 
+    'Disneyland Railroad', 'Pooh Corner - Sweets Shop', 'Mint Julep Bar', 'French Market')
 
     # if answer_1 is value="Adults; no kids":
     #     itinerary_1 += 1
