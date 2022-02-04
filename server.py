@@ -93,38 +93,48 @@ def results_page():
     a_foodie = request.form.get("q_foodie")
     a_must_ride = request.form.getlist("q_must_ride")
 
-    itinerary_1 = []
-    itinerary_2 = []
-    itinerary_3 = []
-    itinerary_4 = []
 
-    water_rides = ('Splash Mountain', 'Davy Crocketts Explorer Canoes', 'Storybook Land Canal Boats', 'Jungle Cruise')   #variable to hold water rides, can exclude them if weather is cold
-    kid_rides = ('Roger Rabbits Car Toon Spin', 'Casey Jr. Circus Train', 'Mickeys House and Meet Mickey', 'Autopia'
-    'Gadgets Go Coaster', 'Dumbo the Flying Elephant', 'Astro Orbitor', 'King Arthur Carousel', 'Many Adventures of Winnie the Pooh')
-    dark_rides = ('Haunted Mansion', 'Peter Pans Flight', 'Many Adventures of Winnie the Pooh', 
-    'Snow Whites Enchanted Wish', 'Pirates of the Caribbean', 'Its a small world', 'Mr Toads Wild Ride', 'Roger Rabbits Car Toon Spin')
-    thrill_rides = ('Matterhorn Bobsleds', 'Big Thunder Mountain Railroad', 'Star Wars: Rise of the Resistance', 'Space Mountain', 'Indiana Jones Adventure', 'Splash Mountain', '')
-    motion_rides = ('Millenium Falcon: Smugglers Run', 'Star Tours - The Adventures Continue', 'Finding Nemo Submarine Voyage', 'Space Mountain', 'Mad Tea Party')
-    large_group_rides = ('Jungle Cruise', 'Its a small world', 'Pirates of the Caribbean', 'Haunted Mansion', 'Pirates Lair on Tom Sawyer Island', 
-    'Many Adventures of Winnie the Pooh', 'Walt Disneys Enchanted Tiki Room')
-    no_rides = ('Walt Disneys Enchanted Tiki Room', 'Blue Bayou Restaurant', 'Ogas Cantina at the Disneyland Resort', 
-    'Disneyland Railroad', 'Pooh Corner - Sweets Shop', 'Mint Julep Bar', 'French Market')
-
-    # if answer_1 is value="Adults; no kids":
-    #     itinerary_1 += 1
-
-    # if answer_1 is value="Family; kids under 8":
-    #     itinerary_2 += 1
-
-    # if answer_1 is value="Family; kids over 8":
-    #     itinerary_3 += 1
-
-    # if answer_1 is value="Large group, 6+":
-    #     itinerary_4 += 1
+    water_rides = ['Splash Mountain', 'Davy Crocketts Explorer Canoes', 'Storybook Land Canal Boats', 'Jungle Cruise']   #variable to hold water rides, can exclude them if weather is cold
+    kid_rides = ['Roger Rabbits Car Toon Spin', 'Casey Jr. Circus Train', 'Mickeys House and Meet Mickey', 'Autopia'
+    'Gadgets Go Coaster', 'Dumbo the Flying Elephant', 'Astro Orbitor', 'King Arthur Carousel', 'Many Adventures of Winnie the Pooh']
+    dark_rides = ['Haunted Mansion', 'Peter Pans Flight', 'Many Adventures of Winnie the Pooh', 
+    'Snow Whites Enchanted Wish', 'Pirates of the Caribbean', 'Its a small world', 'Mr Toads Wild Ride', 'Roger Rabbits Car Toon Spin']
+    thrill_rides = ['Matterhorn Bobsleds', 'Big Thunder Mountain Railroad', 'Star Wars: Rise of the Resistance', 'Space Mountain', 'Indiana Jones Adventure', 'Splash Mountain']
+    motion_rides = ['Millenium Falcon: Smugglers Run', 'Star Tours - The Adventures Continue', 'Finding Nemo Submarine Voyage', 'Space Mountain', 'Mad Tea Party']
+    large_group_rides = ['Jungle Cruise', 'Its a small world', 'Pirates of the Caribbean', 'Haunted Mansion', 'Pirates Lair on Tom Sawyer Island', 
+    'Many Adventures of Winnie the Pooh', 'Walt Disneys Enchanted Tiki Room']
+    no_rides = ['Walt Disneys Enchanted Tiki Room', 'Blue Bayou Restaurant', 'Ogas Cantina at the Disneyland Resort', 
+    'Disneyland Railroad', 'Pooh Corner - Sweets Shop', 'Mint Julep Bar', 'French Market']
 
 
+    # create a set to weed out duplicates, could use Rule Engine to parse out which list to include
 
-    # if q3_answer is value="yes":
+    itinerary_set = set()
+
+    while True:
+        if a_travel_grp == 'Adults; no kids':
+            itinerary_set.add('thrill_rides')
+        
+        if a_weather == 'hot':
+            itinerary_set.add('water_rides')
+        
+        if a_dark_ride is True:
+            itinerary_set.add('dark_rides')
+        
+        if a_thrill_ride is True:
+            itinerary_set.add('thrill_rides')
+
+        if a_motion_sick is not True:
+            itinerary_set.add('motion_rides')
+        
+        if a_foodie is True:
+            itinerary_set.add('no_rides')
+        
+        return itinerary_set
+
+    return render_template("results.html")
+
+
 
 @app.route("/itinerary_no_kids")
 def itinerary_no_kids():
@@ -133,13 +143,11 @@ def itinerary_no_kids():
     return render_template("itinerary_no_kids.html")
 
 
-@app.route("/user_itinerary")
-def user_itinerary ():
+@app.route("/user_home")
+def user_home ():
     """User's first page upon second login"""
 
-
-
-    return render_template("user_itinerary.html")
+    return render_template("user_home.html")
 
 if __name__ == "__main__":
     connect_to_db(app)

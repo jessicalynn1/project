@@ -1,6 +1,6 @@
 """create, read, update, delete; import from model your db; this is where you define functions, access the html, and return data"""
 
-from model import db, User, Form, Category, Join, Ride, connect_to_db
+from model import db, User, Form, Category, RideCategory, Ride, connect_to_db
 
 def create_user(email, password):
     """Create and return a new user."""
@@ -14,9 +14,9 @@ def all_users_list():
 
     return User.query.all()
 
-def get_user_by_id(user_id):
+def get_user_by_id(id):
     """Return a user object by its ID"""
-    return User.query.get(user_id)
+    return User.query.get(id)
 
 def get_user_by_email(email):
     """Check if user with email exists.
@@ -26,7 +26,7 @@ def get_user_by_email(email):
     return User.query.filter_by(email = email).first()
 
 def check_user_password(email, password):
-    """If password entered matches password in databse, return True.
+    """If password entered matches password in database, return True.
         If password does not  match, return False."""
     
     user = User.query.filter(User.email == email).first()
@@ -41,10 +41,10 @@ def all_forms_by_user(user_id):
 
     return Form.query.filter(Form.user_id == user_id).all()
 
-def get_result(category_id):
+def get_result(id):
     """Show dream day result"""
 
-    return Category.query.filter(Category.category_id == category_id).first()
+    return Category.query.filter(Category.id == id).first()
 
 if __name__ == '__main__':
     from server import app

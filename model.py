@@ -9,7 +9,7 @@ class User(db.Model):
 
     __tablename__ = 'users'
 
-    id = db.Column(db.Integer,
+    user_id = db.Column(db.Integer,
                         autoincrement=True,
                         primary_key=True)
     user_name = db.Column(db.String, unique=False)
@@ -37,15 +37,13 @@ class Form(db.Model):
     q_motion_sick = db.Column(db.Boolean)
     q_foodie = db.Column(db.Boolean)
     q_must_ride = db.Column(db.String)
-    question8 = db.Column(db.String)
-    question9 = db.Column(db.String)
-    question10 = db.Column(db.String)
+
 
     user = db.relationship("User", backref="form")
     category = db.relationship("Category", backref="form")
 
     def __repr__(self):
-        return f'<Form form_id={self.form_id} category_id={self.category_id} user_id={self.user_id}>'
+        return f'<Form form_id={self.id} category_id={self.category_id} user_id={self.user_id}>'
 
 
 class Category(db.Model):
@@ -64,23 +62,23 @@ class Category(db.Model):
         return f'<Category category_id={self.category_id}>'
 
 
-class Join(db.Model):
+class RideCategory(db.Model):
     """Join table for rides and categories"""
 
-    __tablename__ = 'join'
+    __tablename__ = 'ridecategory'
 
-    join_id = db.Column(db.Integer,
+    id = db.Column(db.Integer,
                         autoincrement=True,
                         primary_key=True)
     category_id = db.Column(db.Integer, db.ForeignKey("category.category_id"))
     ride_id = db.Column(db.Integer, db.ForeignKey("ride.ride_id"))
     ride_order = db.Column(db.Integer) #Possibly coming in 2.0
 
-    category = db.relationship("Category", backref="join")
-    ride = db.relationship("Ride", backref="join")
+    category = db.relationship("Category", backref="ridecategory")
+    ride = db.relationship("Ride", backref="ridecategory")
 
     def __repr__(self):
-        return f'<Join join_id={self.join_id} category_id={self.category_id} ride_order={self.ride_order}>'
+        return f'<Join join_id={self.id} category_id={self.category_id} ride_order={self.ride_order}>'
 
 
 class Ride(db.Model):
@@ -94,10 +92,10 @@ class Ride(db.Model):
     ride_name = db.Column(db.String, unique=True)
     ride_wait_time = db.Column(db.String) #from API
 
-    #sending ride_id to join table via backref
+    #sending ride_id to RideCategory table via backref
 
     def __repr__(self):
-        return f'<Ride ride_id={self.ride_id}>'
+        return f'<Ride ride_id={self.id}>'
 
 
 def connect_to_db(flask_app, db_uri="postgresql:///results", echo=True):
