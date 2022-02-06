@@ -81,6 +81,7 @@ def form_page():
 
     return render_template("form.html")
 
+
 @app.route("/results", methods=['POST'])
 def results_page():
     """Shows the results of form"""
@@ -113,41 +114,45 @@ def results_page():
 
     while True:
         if a_travel_grp == 'Adults; no kids':
-            itinerary_set.add('thrill_rides')
+            for ride in thrill_rides:
+                itinerary_set.add(ride)
         
         if a_weather == 'hot':
-            itinerary_set.add('water_rides')
+            for ride in water_rides:
+                itinerary_set.add(ride)
         
         if a_dark_ride is True:
-            itinerary_set.add('dark_rides')
+            for ride in dark_rides:
+                itinerary_set.add(ride)
         
         if a_thrill_ride is True:
-            itinerary_set.add('thrill_rides')
+            for ride in thrill_rides:
+                itinerary_set.add(ride)
 
         if a_motion_sick is not True:
-            itinerary_set.add('motion_rides')
+            for ride in motion_rides:
+                itinerary_set.add(ride)
         
         if a_foodie is True:
-            itinerary_set.add('no_rides')
+            for ride in no_rides:
+                itinerary_set.add(ride)
         
-        return itinerary_set
 
-    return render_template("results.html")
+    # itinerary_list = []
 
-
-
-@app.route("/itinerary_no_kids")
-def itinerary_no_kids():
-    """Show itinerary - No Kids"""
-
-    return render_template("itinerary_no_kids.html")
+    # for i in itinerary_set:
+    #     itinerary_list.append(i)
+        # itinerary_set = list(itinerary_set)
+        print(itinerary_set)
+        return render_template("results.html", itinerary_set=itinerary_set)
 
 
-@app.route("/user_home")
-def user_home ():
+
+@app.route("/user_profile")
+def user_profile ():
     """User's first page upon second login"""
 
-    return render_template("user_home.html")
+    return render_template("user_profile.html")
 
 if __name__ == "__main__":
     connect_to_db(app)
