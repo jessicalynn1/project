@@ -23,6 +23,8 @@ class User(db.Model):
 class Form(db.Model):
     """Dream Disney Day form"""
 
+    # can i use this form to store and retreive the users itinerary?
+
     __tablename__ = 'form'
 
     id = db.Column(db.Integer,
@@ -96,6 +98,11 @@ class Ride(db.Model):
 
     def __repr__(self):
         return f'<Ride ride_id={self.id}>'
+
+
+# create a new database table to store users itinerary
+
+
 
 
 def connect_to_db(flask_app, db_uri="postgresql:///results", echo=True):

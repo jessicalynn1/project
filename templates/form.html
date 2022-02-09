@@ -3,16 +3,21 @@
 {% extends 'base.html' %}
 
 {% block body %}
-  <h1> Welcome, user_name </h1>
-        <!-- Need to figure out how to get user_name to populate 
-        if this condition, flash user_name-->
+  <h1> Welcome, let's plan you dream day! </h1>
 
-    <h2>Let's plan your dream day!</h2>
     <h3>Please fill out the form below.</h3>
   
     <body>
     <form action="results" method="POST">
   
+        <br>
+        First, what do you want to name your trip?
+        <br>
+        ex. "Besties Girl Trip!" or "Taylor Family Reunion 2021"
+        <br>
+        <input type="text" name="trip-name">
+        <br>
+
         <p>Tell me about your travel group.</p>
     
         <select name='q_travel_grp'>

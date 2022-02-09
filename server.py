@@ -1,7 +1,7 @@
 """this is where you set up routes (to web pages); routes include functions that return render_templates to html pages"""
 
 from flask import (Flask, render_template, request, flash, session, redirect, jsonify)
-from model import connect_to_db, db
+from model import connect_to_db, db, Form
 import crud
 
 from jinja2 import StrictUndefined
@@ -79,6 +79,7 @@ def rides_page():
 def form_page():
     """Loads form for user"""
 
+
     return render_template("form.html")
 
 
@@ -86,6 +87,7 @@ def form_page():
 def results_page():
     """Shows the results of form"""
 
+    trip_name = request.form.getlist("trip-name")
     a_travel_grp = request.form.get("q_travel_grp")
     a_weather = request.form.get("q_weather")
     a_dark_ride = request.form.get("q_dark_ride")
@@ -95,8 +97,14 @@ def results_page():
     a_must_ride = request.form.getlist("q_must_ride")
 
 
+    # new_profile = Form(user_id = user_id)
+    # db.session.add(new_profile)
+    # db.session.commit()
+    # print(session['pkey'])
+
+
     water_rides = ['Splash Mountain', 'Davy Crocketts Explorer Canoes', 'Storybook Land Canal Boats', 'Jungle Cruise']   #variable to hold water rides, can exclude them if weather is cold
-    kid_rides = ['Roger Rabbits Car Toon Spin', 'Casey Jr. Circus Train', 'Mickeys House and Meet Mickey', 'Autopia'
+    kid_rides = ['Roger Rabbits Car Toon Spin', 'Casey Jr. Circus Train', 'Mickeys House and Meet Mickey', 'Autopia',
     'Gadgets Go Coaster', 'Dumbo the Flying Elephant', 'Astro Orbitor', 'King Arthur Carousel', 'Many Adventures of Winnie the Pooh']
     dark_rides = ['Haunted Mansion', 'Peter Pans Flight', 'Many Adventures of Winnie the Pooh', 
     'Snow Whites Enchanted Wish', 'Pirates of the Caribbean', 'Its a small world', 'Mr Toads Wild Ride', 'Roger Rabbits Car Toon Spin']
@@ -112,39 +120,44 @@ def results_page():
 
     itinerary_set = set()
 
-    while True:
-        if a_travel_grp == 'Adults; no kids':
-            for ride in thrill_rides:
-                itinerary_set.add(ride)
-        
-        if a_weather == 'hot':
-            for ride in water_rides:
-                itinerary_set.add(ride)
-        
-        if a_dark_ride is True:
-            for ride in dark_rides:
-                itinerary_set.add(ride)
-        
-        if a_thrill_ride is True:
-            for ride in thrill_rides:
-                itinerary_set.add(ride)
 
-        if a_motion_sick is not True:
-            for ride in motion_rides:
-                itinerary_set.add(ride)
-        
-        if a_foodie is True:
-            for ride in no_rides:
-                itinerary_set.add(ride)
+    if a_travel_grp == 'Adults; no kids':
+        itinerary_set.update(thrill_rides)
+
+    if a_travel_grp == 'Family; kids under 8':
+        itinerary_set.update(kid_rides)
+
+    if a_travel_grp == 'Family; kids over 8':
+        itinerary_set.update(thrill_rides)
+    
+    if a_travel_grp == 'Large group, 6+':
+        itinerary_set.update(large_group_rides)
+
+    if a_weather == 'hot':
+        itinerary_set.update(water_rides)
+
+    if a_dark_ride:
+        itinerary_set.update(dark_rides)
+
+    if a_thrill_ride:
+        itinerary_set.update(thrill_rides)
+
+    if a_motion_sick == 'no':
+        itinerary_set.update(motion_rides)
+
+    if a_foodie:
+        itinerary_set.update(no_rides)
+
+    if a_must_ride:
+        itinerary_set.update(a_must_ride)
+    print(itinerary_set)
+    print()
         
 
-    # itinerary_list = []
+    print(itinerary_set)
+    return render_template("results.html", itinerary_set=itinerary_set, trip_name=trip_name)
 
-    # for i in itinerary_set:
-    #     itinerary_list.append(i)
-        # itinerary_set = list(itinerary_set)
-        print(itinerary_set)
-        return render_template("results.html", itinerary_set=itinerary_set)
+    # figure out how to email the result to the user
 
 
 
