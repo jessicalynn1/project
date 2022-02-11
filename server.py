@@ -87,6 +87,7 @@ def form_page():
 def results_page():
     """Shows the results of form"""
 
+
     trip_name = request.form.getlist("trip-name")
     a_travel_grp = request.form.get("q_travel_grp")
     a_weather = request.form.get("q_weather")
@@ -94,7 +95,9 @@ def results_page():
     a_thrill_ride = request.form.get("q_thrill_ride")
     a_motion_sick = request.form.get("q_motion_sick")
     a_foodie = request.form.get("q_foodie")
-    a_must_ride = request.form.getlist("q_must_ride")
+    a_must_ride_1 = request.form.get("q_must_ride_1")
+    a_must_ride_2 = request.form.get("q_must_ride_2")
+    a_must_ride_3 = request.form.get("q_must_ride_3")
 
 
     # new_profile = Form(user_id = user_id)
@@ -115,8 +118,6 @@ def results_page():
     no_rides = ['Walt Disneys Enchanted Tiki Room', 'Blue Bayou Restaurant', 'Ogas Cantina at the Disneyland Resort', 
     'Disneyland Railroad', 'Pooh Corner - Sweets Shop', 'Mint Julep Bar', 'French Market']
 
-
-    # create a set to weed out duplicates, could use Rule Engine to parse out which list to include
 
     itinerary_set = set()
 
@@ -148,16 +149,21 @@ def results_page():
     if a_foodie:
         itinerary_set.update(no_rides)
 
-    if a_must_ride:
-        itinerary_set.update(a_must_ride)
-    print(itinerary_set)
-    print()
+    if a_must_ride_1:
+        itinerary_set.add(a_must_ride_1)
+    
+    if a_must_ride_2:
+        itinerary_set.add(a_must_ride_2)
+
+    if a_must_ride_3:
+        itinerary_set.add(a_must_ride_3)
+
         
 
     print(itinerary_set)
     return render_template("results.html", itinerary_set=itinerary_set, trip_name=trip_name)
 
-    # figure out how to email the result to the user
+    # figure out how to email the result to the user in 2.0
 
 
 
