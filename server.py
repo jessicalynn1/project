@@ -63,6 +63,7 @@ def log_in():
     
     return redirect("/")
 
+
 @app.route("/rides")
 def rides_page():
     """Show the rides page"""
@@ -79,14 +80,12 @@ def rides_page():
 def form_page():
     """Loads form for user"""
 
-
     return render_template("form.html")
 
 
 @app.route("/results", methods=['POST'])
 def results_page():
     """Shows the results of form"""
-
 
     trip_name = request.form.getlist("trip-name")
     a_travel_grp = request.form.get("q_travel_grp")
@@ -100,22 +99,16 @@ def results_page():
     a_must_ride_3 = request.form.get("q_must_ride_3")
 
 
-    # new_profile = Form(user_id = user_id)
-    # db.session.add(new_profile)
-    # db.session.commit()
-    # print(session['pkey'])
-
-
-    water_rides = ['Splash Mountain', 'Davy Crocketts Explorer Canoes', 'Storybook Land Canal Boats', 'Jungle Cruise']   #variable to hold water rides, can exclude them if weather is cold
-    kid_rides = ['Roger Rabbits Car Toon Spin', 'Casey Jr. Circus Train', 'Mickeys House and Meet Mickey', 'Autopia',
+    WATER_RIDES = ['Splash Mountain', 'Davy Crocketts Explorer Canoes', 'Storybook Land Canal Boats', 'Jungle Cruise']   #variable to hold water rides, can exclude them if weather is cold
+    KID_RIDES = ['Roger Rabbits Car Toon Spin', 'Casey Jr. Circus Train', 'Mickeys House and Meet Mickey', 'Autopia',
     'Gadgets Go Coaster', 'Dumbo the Flying Elephant', 'Astro Orbitor', 'King Arthur Carousel', 'Many Adventures of Winnie the Pooh']
-    dark_rides = ['Haunted Mansion', 'Peter Pans Flight', 'Many Adventures of Winnie the Pooh', 
+    DARK_RIDES = ['Haunted Mansion', 'Peter Pans Flight', 'Many Adventures of Winnie the Pooh', 
     'Snow Whites Enchanted Wish', 'Pirates of the Caribbean', 'Its a small world', 'Mr Toads Wild Ride', 'Roger Rabbits Car Toon Spin']
-    thrill_rides = ['Matterhorn Bobsleds', 'Big Thunder Mountain Railroad', 'Star Wars: Rise of the Resistance', 'Space Mountain', 'Indiana Jones Adventure', 'Splash Mountain']
-    motion_rides = ['Millenium Falcon: Smugglers Run', 'Star Tours - The Adventures Continue', 'Finding Nemo Submarine Voyage', 'Space Mountain', 'Mad Tea Party']
-    large_group_rides = ['Jungle Cruise', 'Its a small world', 'Pirates of the Caribbean', 'Haunted Mansion', 'Pirates Lair on Tom Sawyer Island', 
+    THRILL_RIDES = ['Matterhorn Bobsleds', 'Big Thunder Mountain Railroad', 'Star Wars: Rise of the Resistance', 'Space Mountain', 'Indiana Jones Adventure', 'Splash Mountain']
+    MOTION_RIDES = ['Millenium Falcon: Smugglers Run', 'Star Tours - The Adventures Continue', 'Finding Nemo Submarine Voyage', 'Space Mountain', 'Mad Tea Party']
+    LARGE_GROUP_RIDES = ['Jungle Cruise', 'Its a small world', 'Pirates of the Caribbean', 'Haunted Mansion', 'Pirates Lair on Tom Sawyer Island', 
     'Many Adventures of Winnie the Pooh', 'Walt Disneys Enchanted Tiki Room']
-    no_rides = ['Walt Disneys Enchanted Tiki Room', 'Blue Bayou Restaurant', 'Ogas Cantina at the Disneyland Resort', 
+    NO_RIDES = ['Walt Disneys Enchanted Tiki Room', 'Blue Bayou Restaurant', 'Ogas Cantina at the Disneyland Resort', 
     'Disneyland Railroad', 'Pooh Corner - Sweets Shop', 'Mint Julep Bar', 'French Market']
 
 
@@ -123,31 +116,31 @@ def results_page():
 
 
     if a_travel_grp == 'Adults; no kids':
-        itinerary_set.update(thrill_rides)
+        itinerary_set.update(THRILL_RIDES)
 
     if a_travel_grp == 'Family; kids under 8':
-        itinerary_set.update(kid_rides)
+        itinerary_set.update(KID_RIDES)
 
     if a_travel_grp == 'Family; kids over 8':
-        itinerary_set.update(thrill_rides)
+        itinerary_set.update(THRILL_RIDES)
     
     if a_travel_grp == 'Large group, 6+':
-        itinerary_set.update(large_group_rides)
+        itinerary_set.update(LARGE_GROUP_RIDES)
 
     if a_weather == 'hot':
-        itinerary_set.update(water_rides)
+        itinerary_set.update(WATER_RIDES)
 
     if a_dark_ride:
-        itinerary_set.update(dark_rides)
+        itinerary_set.update(DARK_RIDES)
 
     if a_thrill_ride:
-        itinerary_set.update(thrill_rides)
+        itinerary_set.update(THRILL_RIDES)
 
     if a_motion_sick == 'no':
-        itinerary_set.update(motion_rides)
+        itinerary_set.update(MOTION_RIDES)
 
     if a_foodie:
-        itinerary_set.update(no_rides)
+        itinerary_set.update(NO_RIDES)
 
     if a_must_ride_1:
         itinerary_set.add(a_must_ride_1)
@@ -158,9 +151,12 @@ def results_page():
     if a_must_ride_3:
         itinerary_set.add(a_must_ride_3)
 
-        
 
-    print(itinerary_set)
+    # new_profile = Form(id=id)         #this is not working..
+    # db.session.add(new_profile)
+    # db.session.commit()
+    # print(session['pkey'])
+
     return render_template("results.html", itinerary_set=itinerary_set, trip_name=trip_name)
 
     # figure out how to email the result to the user in 2.0
@@ -168,10 +164,15 @@ def results_page():
 
 
 @app.route("/user_profile")
-def user_profile ():
+def user_profile():
     """User's first page upon second login"""
 
-    return render_template("user_profile.html")
+    #if user wants to see old itinerary, take them to results route
+    #if user wants to fill out a new form, take them to blank form route
+
+    return render_template("user_profile.html") #will need to render new route based on reply
+
+
 
 if __name__ == "__main__":
     connect_to_db(app)

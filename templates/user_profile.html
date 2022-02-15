@@ -2,9 +2,18 @@
 <!-- place to upload photos and notes, part of 2.0 -->
 
 {% extends 'base.html' %}
-{% block title %}Your Profile{% endblock %}
+{% block title %} Welcome! {% endblock %}
 
 {% block body %}
+    <h1> Would you like to see your previous saved itinerary? </h1>
+
+    <body>
+        <form>
+            <p> <input type="submit" value="Yes"> </p>
+            <p> <input type="submit" value="No, take me to the form"> </p>
+        </form>
+    </body>
+
 <ol>
     <!-- Print itinerary here -->
 </ol>

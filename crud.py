@@ -1,6 +1,6 @@
 """create, read, update, delete; import from model your db; this is where you define functions, access the html, and return data"""
 
-from model import db, User, Form, Category, RideCategory, Ride, connect_to_db
+from model import db, User, Form, connect_to_db, Itinerary, Ride
 
 def create_user(email, password):
     """Create and return a new user."""
@@ -41,10 +41,17 @@ def all_forms_by_user(user_id):
 
     return Form.query.filter(Form.user_id == user_id).all()
 
-def get_result(id):
+def save_result(id):
     """Show dream day result"""
+    
+    return Itinerary.query.filter(Itinerary.id == id).first()
 
-    return Category.query.filter(Category.id == id).first()
+def create_ride(name):
+    """Create and return a ride."""
+    
+    ride = Ride(name=name)
+    
+    return ride
 
 if __name__ == '__main__':
     from server import app

@@ -1,6 +1,7 @@
 """Models for project; this is where you create your tables (called classes) and connect to db using flask (a function)"""
 
 from flask_sqlalchemy import SQLAlchemy
+# import datetime
 
 db = SQLAlchemy()
 
@@ -16,6 +17,7 @@ class User(db.Model):
     email = db.Column(db.String, unique=True)
     password = db.Column(db.String)
 
+
     def __repr__(self):
         return f'<User user_id={self.user_id} email={self.email}>'
 
@@ -23,15 +25,12 @@ class User(db.Model):
 class Form(db.Model):
     """Dream Disney Day form"""
 
-    # can i use this form to store and retreive the users itinerary?
-
     __tablename__ = 'form'
 
     id = db.Column(db.Integer,
                         autoincrement=True,
                         primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
-    category_id = db.Column(db.Integer, db.ForeignKey("category.category_id"))
+    user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"), nullable=False)
     q_travel_grp = db.Column(db.String)
     q_weather = db.Column(db.String)
     q_dark_ride = db.Column(db.Boolean)
@@ -39,48 +38,32 @@ class Form(db.Model):
     q_motion_sick = db.Column(db.Boolean)
     q_foodie = db.Column(db.Boolean)
     q_must_ride = db.Column(db.String)
-
+    # time_stamp = db.Column(db.datetime)
 
     user = db.relationship("User", backref="form")
-    category = db.relationship("Category", backref="form")
+ 
 
     def __repr__(self):
-        return f'<Form form_id={self.id} category_id={self.category_id} user_id={self.user_id}>'
+        return f'<Form form_id={self.id} user_id={self.user_id}>'
 
 
-class Category(db.Model):
-    """Category that user falls into"""
 
-    __tablename__ = 'category'
+class FormRide(db.Model):
+    """Join table for form and rides"""
 
-    category_id = db.Column(db.Integer,
-                            autoincrement=True,
-                            primary_key=True)
-    category_desc = db.Column(db.String)
-
-    #sending category_id to join table via backref
-
-    def __repr__(self):
-        return f'<Category category_id={self.category_id}>'
-
-
-class RideCategory(db.Model):
-    """Join table for rides and categories"""
-
-    __tablename__ = 'ridecategory'
+    __tablename__ = 'formride'
 
     id = db.Column(db.Integer,
                         autoincrement=True,
                         primary_key=True)
-    category_id = db.Column(db.Integer, db.ForeignKey("category.category_id"))
-    ride_id = db.Column(db.Integer, db.ForeignKey("ride.ride_id"))
-    ride_order = db.Column(db.Integer) #Possibly coming in 2.0
+    form_id = db.Column(db.Integer, db.ForeignKey("form.id"))
+    ride_id = db.Column(db.Integer, db.ForeignKey("ride.id"))
 
-    category = db.relationship("Category", backref="ridecategory")
-    ride = db.relationship("Ride", backref="ridecategory")
+    form = db.relationship("Form", backref="formride")
+    ride = db.relationship("Ride", backref="formride")
 
     def __repr__(self):
-        return f'<Join join_id={self.id} category_id={self.category_id} ride_order={self.ride_order}>'
+        return f'<FormRide id={self.id} form_id={self.itinerary_id}>'
 
 
 class Ride(db.Model):
@@ -88,21 +71,31 @@ class Ride(db.Model):
 
     __tablename__ = 'ride'
 
-    ride_id = db.Column(db.Integer,
+    id = db.Column(db.Integer,
                         autoincrement=True,
                         primary_key=True)
-    ride_name = db.Column(db.String, unique=True)
-    ride_wait_time = db.Column(db.String) #from API
+    name = db.Column(db.String, unique=True)
+    # wait_time = db.Column(db.String) version 2.0
 
-    #sending ride_id to RideCategory table via backref
 
     def __repr__(self):
-        return f'<Ride ride_id={self.id}>'
+        return f'<Ride ride_id={self.id} name={self.name}>'
 
 
-# create a new database table to store users itinerary
+class Itinerary(db.Model):
+    """Saved user result"""
 
+    __tablename__ = 'itinerary'
 
+    id = db.Column(db.Integer,
+                    autoincrement=True,
+                    primary_key=True)
+    formride_id = db.Column(db.Integer, db.ForeignKey("formride.id"), nullable=False)
+
+    formride = db.relationship("FormRide", backref="Itinerary")
+
+    def __repr__(self):
+        return f'<Itinerary id={self.id} user_id={self.user_id}>'
 
 
 def connect_to_db(flask_app, db_uri="postgresql:///results", echo=True):
@@ -117,5 +110,5 @@ def connect_to_db(flask_app, db_uri="postgresql:///results", echo=True):
 
 
 if __name__ == "__main__":
-    from server import app
-    connect_to_db(app)
+    from server import flask_app
+    connect_to_db(flask_app)
