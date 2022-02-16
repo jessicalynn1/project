@@ -5,27 +5,25 @@
 import os
 import json
 from random import choice, randint
-from datetime import datetime
+import requests
+from pprint import pprint
 
 import crud
 import model
 import server
 
-# os.system("dropdb ratings")
-# os.system('createdb ratings')
 
 model.connect_to_db(server.app)
 model.db.create_all()
 
 
-with open('https://api.themeparks.wiki/preview/parks/DisneylandResortMagicKingdom/waittime') as f:
-    ride_data = json.loads(f.read())
-
+res = requests.get('https://api.themeparks.wiki/preview/parks/DisneylandResortMagicKingdom/waittime')
+response = res.json()
+# pprint(response)
 
 ride_list = []
 
-
-for ride in ride_data:
+for ride in response:
 
     name = ride['name']
 
@@ -36,5 +34,3 @@ for ride in ride_data:
 model.db.session.add_all(ride_list)
 model.db.session.commit()
 
-
-model.db.session.commit()

@@ -1,7 +1,7 @@
 """this is where you set up routes (to web pages); routes include functions that return render_templates to html pages"""
 
 from flask import (Flask, render_template, request, flash, session, redirect, jsonify)
-from model import connect_to_db, db, Form
+from model import connect_to_db, db, Form, FormRide, User, Ride
 import crud
 
 from jinja2 import StrictUndefined
@@ -49,6 +49,7 @@ def log_in():
     
     user_exist = crud.get_user_by_email(email)
     # check_password = crud.check_user_password(password)
+    user_profile = session.get("results", {})
 
     if user_exist:
         checked_user = crud.check_user_password(email, password)
@@ -90,10 +91,10 @@ def results_page():
     trip_name = request.form.getlist("trip-name")
     a_travel_grp = request.form.get("q_travel_grp")
     a_weather = request.form.get("q_weather")
-    a_dark_ride = request.form.get("q_dark_ride")
-    a_thrill_ride = request.form.get("q_thrill_ride")
-    a_motion_sick = request.form.get("q_motion_sick")
-    a_foodie = request.form.get("q_foodie")
+    a_dark_ride = bool(request.form.get("q_dark_ride"))
+    a_thrill_ride = bool(request.form.get("q_thrill_ride"))
+    a_motion_sick = bool(request.form.get("q_motion_sick"))
+    a_foodie = bool(request.form.get("q_foodie"))
     a_must_ride_1 = request.form.get("q_must_ride_1")
     a_must_ride_2 = request.form.get("q_must_ride_2")
     a_must_ride_3 = request.form.get("q_must_ride_3")
@@ -152,15 +153,23 @@ def results_page():
         itinerary_set.add(a_must_ride_3)
 
 
-    # new_profile = Form(id=id)         #this is not working..
-    # db.session.add(new_profile)
-    # db.session.commit()
-    # print(session['pkey'])
+    new_profile = Form(user_id=session['pkey'], q_travel_grp=a_travel_grp, q_weather=a_weather, q_dark_ride=a_dark_ride,
+                        q_thrill_ride=a_thrill_ride, q_motion_sick=a_motion_sick, q_foodie=a_foodie, q_must_ride_1=a_must_ride_1,
+                        q_must_ride_2=a_must_ride_2, q_must_ride_3=a_must_ride_3)       
+    db.session.add(new_profile)
+    db.session.commit()
+    print(session['pkey'])
+
+
+    saved_result = FormRide()
+    db.session.add(saved_result)
+    db.session.commit()
 
     return render_template("results.html", itinerary_set=itinerary_set, trip_name=trip_name)
 
     # figure out how to email the result to the user in 2.0
 
+# need to send to db, need to create instances of class formride, add those and commit to db
 
 
 @app.route("/user_profile")
