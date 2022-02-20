@@ -1,0 +1,24 @@
+<!-- just a list of all the rides from the API -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<body>
+<form action="/filter-ride" method="POST">
+<section id="ride-list">
+    <h1>List of Rides at Disneyland Resort</h1>
+    <ul>
+    {% for ride in rides %}
+      <li><input type="checkbox" name="ride" value="{{ ride.name }}">{{ ride.name }}</input></li>
+    {% endfor %}
+    </ul>
+    <select name="category">
+    {% for category in categories %}
+      <option value="{{ category.name }}">{{ category.name }}</option>
+    {% endfor %}
+  </select>
+  </section>
+<button type="submit">Submit</button>
+</form>
+</body>
+

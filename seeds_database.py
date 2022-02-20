@@ -17,20 +17,19 @@ model.connect_to_db(server.app)
 model.db.create_all()
 
 
+categories = ["Dark", "Water", "Thrill", "Adults", "Kid", "Motion", "Foodie", "Large Group", "Must"]
+
+for category in categories:
+    c = model.Category(name=category)
+    model.db.session.add(c)
+    model.db.session.commit()
+
 res = requests.get('https://api.themeparks.wiki/preview/parks/DisneylandResortMagicKingdom/waittime')
 response = res.json()
-# pprint(response)
-
-ride_list = []
 
 for ride in response:
-
     name = ride['name']
-
     new_ride = crud.create_ride(name)
-    ride_list.append(new_ride)
-
-
-model.db.session.add_all(ride_list)
-model.db.session.commit()
+    model.db.session.add(new_ride)
+    model.db.session.commit()
 

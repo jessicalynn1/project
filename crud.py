@@ -1,6 +1,6 @@
 """create, read, update, delete; import from model your db; this is where you define functions, access the html, and return data"""
 
-from model import db, User, Form, connect_to_db, Ride, FormRide
+from model import db, User, Form, connect_to_db, Ride, FormRide, RideCategory, Category
 
 def create_user(email, password):
     """Create and return a new user."""
@@ -23,13 +23,13 @@ def get_user_by_email(email):
         If true, return user. 
         If false, return None."""
     
-    return User.query.filter_by(email = email).first()
+    return User.query.filter_by(email=email).first()
 
 def check_user_password(email, password):
     """If password entered matches password in database, return True.
         If password does not  match, return False."""
     
-    user = User.query.filter(User.email == email).first()
+    user = User.query.filter_by(email=email, password=password).first()
 
     if user.password == password:
         return user.user_id
@@ -59,6 +59,24 @@ def create_ride(name):
     
     ride = Ride(name=name)
     
+    return ride
+
+def get_ride_by_name(name):
+    """Query a ride by its name"""
+
+    return Ride.query.filter_by(name=name).first()
+
+def get_category_by_name(name):
+    """Query a category by its name"""
+
+    return Category.query.filter_by(name=name).first()
+
+def create_ride_category(ride_id, category_id):
+    """Creates an object between a ride and its category"""
+
+    ride = RideCategory(ride_id=ride_id, category_id=category_id)
+    db.session.add(ride)
+    db.session.commit()
     return ride
 
 if __name__ == '__main__':

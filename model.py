@@ -3,7 +3,9 @@
 import datetime
 from flask_sqlalchemy import SQLAlchemy
 
+
 db = SQLAlchemy()
+
 
 class User(db.Model):
     """A user."""
@@ -20,7 +22,36 @@ class User(db.Model):
 
     def __repr__(self):
         return f'<User user_id={self.user_id} email={self.email}>'
+    
+    
+class Ride(db.Model):
+    """List of rides"""
 
+    __tablename__ = 'rides'
+
+    id = db.Column(db.Integer,
+                        autoincrement=True,
+                        primary_key=True)
+    name = db.Column(db.String, unique=True)    
+    # wait_time = db.Column(db.String) version 2.0
+
+    def __repr__(self):
+        return f'<Ride id={self.id} name={self.name}>'
+
+
+class Category(db.Model):
+    """List of ride categories"""
+
+    __tablename__ = 'categories'
+
+    id = db.Column(db.Integer,
+                        autoincrement=True,
+                        primary_key=True)
+    name = db.Column(db.String, unique=True)
+    
+    def __repr__(self):
+        return f'<Category id={self.id} name={self.name}>'
+    
 
 class Form(db.Model):
     """Dream Disney Day form"""
@@ -40,10 +71,9 @@ class Form(db.Model):
     q_must_ride_1 = db.Column(db.String)
     q_must_ride_2 = db.Column(db.String)
     q_must_ride_3 = db.Column(db.String)
-    time_stamp = db.Column(db.DateTime)
+    time_created = db.column(db.DateTime(timezone=True))
 
     user = db.relationship("User", backref="form")
- 
 
     def __repr__(self):
         return f'<Form form_id={self.id} user_id={self.user_id}>'
@@ -57,34 +87,34 @@ class FormRide(db.Model):
     id = db.Column(db.Integer,
                         autoincrement=True,
                         primary_key=True)
-    form_id = db.Column(db.Integer, db.ForeignKey("form.id"))
-    ride_id = db.Column(db.Integer, db.ForeignKey("ride.id"))
+    form_id = db.Column(db.Integer, db.ForeignKey("form.id"), nullable=False)
+    ride_id = db.Column(db.Integer, db.ForeignKey("rides.id"), nullable=False)
 
     form = db.relationship("Form", backref="formride")
     ride = db.relationship("Ride", backref="formride")
-
 
     def __repr__(self):
         return f'<FormRide id={self.id} form_id={self.itinerary_id}>'
 
 
-class Ride(db.Model):
-    """List of rides"""
-
-    __tablename__ = 'ride'
+class RideCategory(db.Model):
+    """Association table for rides and their categories"""
+    __tablename__ = 'ride_categories'
 
     id = db.Column(db.Integer,
                         autoincrement=True,
                         primary_key=True)
-    name = db.Column(db.String, unique=True)
-    # wait_time = db.Column(db.String) version 2.0
-
+    ride_id = db.Column(db.Integer, db.ForeignKey("rides.id"))
+    category_id = db.Column(db.Integer, db.ForeignKey("categories.id"))
+    
+    ride = db.relationship("Ride", backref="ride_categories")
+    category = db.relationship("Category", backref="ride_categories")
 
     def __repr__(self):
-        return f'<Ride ride_id={self.id} name={self.name}>'
+        return f'<RideCategory id={self.id} ride_id={self.ride_id} category_id={self.category_id}>'
 
 
-def connect_to_db(app, db_uri="postgresql:///results", echo=True):
+def connect_to_db(app, db_uri="postgresql:///results", echo=False):
     """Connect the database to our Flask app."""
 
     app.config["SQLALCHEMY_DATABASE_URI"] = db_uri

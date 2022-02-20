@@ -12,7 +12,7 @@
     <body>
         <ol id="itinerary-body">
             {% for ride in itinerary_set %}
-            <li> {{ride}}</li>
+            <li> {{ride.ride.name}}</li>
             {% endfor %}
     </body>
 <br>
