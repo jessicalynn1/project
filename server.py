@@ -10,6 +10,7 @@ import requests
 import json 
 from pprint import pprint
 
+
 app = Flask(__name__)
 app.secret_key = "dev"
 app.jinja_env.undefined = StrictUndefined
@@ -210,12 +211,20 @@ def user_profile():
 
     #if user wants to see old itinerary, take them to results route
     #if user wants to fill out a new form, take them to blank form route
+    # order_desc = sqlalchemy.sql.expression.desc(Form.id)
+    form = Form.query.filter_by(user_id=session['pkey']).order_by(Form.id.desc()).first()
+    saved_result = FormRide.query.filter_by(form_id=form.id).all()
+    # ride_id = 
+    ride_id_list = []
 
-    saved_result = FormRide.query.all()
-    # ride = crud.print_result(id=id).all
-    # rides = FormRide.query.filter_by("ride_id").all()
+    for obj in saved_result:
+        ride_id = obj.ride_id
+        ride_id_list.append(ride_id)
 
-    return render_template("user_profile.html", saved_result=saved_result) #will need to render new route based on reply
+    ride_name = Ride.query.filter(Ride.id.in_(ride_id_list)).all()
+
+
+    return render_template("user_profile.html", saved_result=saved_result, ride_name=ride_name) #will need to render new route based on reply
 
 
 if __name__ == "__main__":

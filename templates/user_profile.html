@@ -7,12 +7,13 @@
 {% block body %}
     <h1>Here is your saved itinerary: </h1>
 
-    <body>
+    <body id="saved-result">
 <!-- need buttons with links to take us to the correct URL -->
 <!-- just have the itinerary load on the page when they login then ask if they want a new one -->
-            <ol id="saved-result">
-                {% for ride in saved_result %}
-                <li>{{ ride }}</li>
+            <ol>
+                <!-- need to figure out why the first ride is separate in the list -->
+                {% for ride in ride_name %}
+                <li>{{ ride.name }}</li>
             </ol>
             {% endfor %}
     </body>
