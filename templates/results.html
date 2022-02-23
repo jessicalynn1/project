@@ -9,6 +9,24 @@
 
 <h2> Itinerary for {{ trip_name }}</h2>
 <br>
+<h3> Here are your MUST ride rides: </h3>
+<body>
+    <ul id="must-ride">
+            {% if must_ride_1 %}
+            <li> {{ must_ride_1 }} </li>
+
+            {% if must_ride_2 %}
+            <li> {{ must_ride_2 }} </li>
+            
+            {% if must_ride_3 %}
+            <li> {{ must_ride_3 }} </li>
+            </ul>
+    {% endif %}
+    {% endif %}
+    {% endif %}
+</body>
+<br>
+<br>
     <body>
         <ol id="itinerary-body">
             {% for ride in itinerary_set %}

@@ -116,23 +116,9 @@ def results_page():
     a_thrill_ride = bool(request.form.get("q_thrill_ride"))
     a_motion_sick = bool(request.form.get("q_motion_sick"))
     a_foodie = bool(request.form.get("q_foodie"))
-    a_must_ride_1 = request.form.get("q_must_ride_1")
-    a_must_ride_2 = request.form.get("q_must_ride_2")
-    a_must_ride_3 = request.form.get("q_must_ride_3")
-    print(request.form, "****FORM INPUTS****")
-
-
-    # WATER_RIDES = ['Splash Mountain', 'Davy Crocketts Explorer Canoes', 'Storybook Land Canal Boats', 'Jungle Cruise']   #variable to hold water rides, can exclude them if weather is cold
-    # KID_RIDES = ['Roger Rabbits Car Toon Spin', 'Casey Jr. Circus Train', 'Mickeys House and Meet Mickey', 'Autopia',
-    # 'Gadgets Go Coaster', 'Dumbo the Flying Elephant', 'Astro Orbitor', 'King Arthur Carousel', 'Many Adventures of Winnie the Pooh']
-    # DARK_RIDES = ['Haunted Mansion', 'Peter Pans Flight', 'Many Adventures of Winnie the Pooh', 
-    # "Snow White's Enchanted Wish", 'Pirates of the Caribbean', 'Its a small world', 'Mr Toads Wild Ride', 'Roger Rabbits Car Toon Spin']
-    # THRILL_RIDES = ['Matterhorn Bobsleds', 'Big Thunder Mountain Railroad', 'Star Wars: Rise of the Resistance', 'Space Mountain', 'Indiana Jones Adventure', 'Splash Mountain']
-    # MOTION_RIDES = ['Millenium Falcon: Smugglers Run', 'Star Tours - The Adventures Continue', 'Finding Nemo Submarine Voyage', 'Space Mountain', 'Mad Tea Party']
-    # LARGE_GROUP_RIDES = ['Jungle Cruise', "it's a small world", 'Pirates of the Caribbean', 'Haunted Mansion', 'Pirates Lair on Tom Sawyer Island', 
-    # 'Many Adventures of Winnie the Pooh', 'Walt Disneys Enchanted Tiki Room']
-    # NO_RIDES = ['Walt Disneys Enchanted Tiki Room', 'Blue Bayou Restaurant', 'Ogas Cantina at the Disneyland Resort', 
-    # 'Disneyland Railroad', 'Pooh Corner - Sweets Shop', 'Mint Julep Bar', 'French Market']
+    must_ride_1 = request.form.get("must_ride_1")
+    must_ride_2 = request.form.get("must_ride_2")
+    must_ride_3 = request.form.get("must_ride_3")
 
 
     itinerary_set = set()
@@ -184,32 +170,15 @@ def results_page():
         rides = RideCategory.query.filter_by(category_id=c_id).all()
         itinerary_set.update(rides)
 
-    if a_must_ride_1:
-        c_id = crud.get_category_by_name('Must').id
-        rides = RideCategory.query.filter_by(category_id=c_id).all()
-        itinerary_set.update(rides)
-    
-    if a_must_ride_2:
-        c_id = crud.get_category_by_name('Must').id
-        rides = RideCategory.query.filter_by(category_id=c_id).all()
-        itinerary_set.update(rides)
-
-    if a_must_ride_3:
-        c_id = crud.get_category_by_name('Must').id
-        rides = RideCategory.query.filter_by(category_id=c_id).all()
-        itinerary_set.update(rides)
-
 
     new_profile = Form(user_id=session['pkey'], q_travel_grp=a_travel_grp, q_weather=a_weather, q_dark_ride=a_dark_ride,
-                        q_thrill_ride=a_thrill_ride, q_motion_sick=a_motion_sick, q_foodie=a_foodie, q_must_ride_1=a_must_ride_1,
-                        q_must_ride_2=a_must_ride_2, q_must_ride_3=a_must_ride_3)   #need to add datetime??    
+                        q_thrill_ride=a_thrill_ride, q_motion_sick=a_motion_sick, q_foodie=a_foodie, q_must_ride_1=must_ride_1,
+                        q_must_ride_2=must_ride_2, q_must_ride_3=must_ride_3)   #need to add datetime??    
     db.session.add(new_profile)
     db.session.commit()
-    print(new_profile, "****NEW PROFILE****")
 
 
     form_id = new_profile.id
-    print(form_id)
 
     for ride_category in itinerary_set:
         saved_result = FormRide(form_id=form_id, ride_id=ride_category.ride.id)
@@ -217,7 +186,8 @@ def results_page():
         db.session.commit()
 
 
-    return render_template("results.html", itinerary_set=itinerary_set, trip_name=trip_name)
+    return render_template("results.html", itinerary_set=itinerary_set, trip_name=trip_name, 
+                    must_ride_1=must_ride_1, must_ride_2=must_ride_2, must_ride_3=must_ride_3)
 
     # figure out how to email the result to the user in 2.0
 
@@ -241,8 +211,11 @@ def user_profile():
     #if user wants to see old itinerary, take them to results route
     #if user wants to fill out a new form, take them to blank form route
 
-    return render_template("user_profile.html") #will need to render new route based on reply
+    saved_result = FormRide.query.all()
+    # ride = crud.print_result(id=id).all
+    # rides = FormRide.query.filter_by("ride_id").all()
 
+    return render_template("user_profile.html", saved_result=saved_result) #will need to render new route based on reply
 
 
 if __name__ == "__main__":

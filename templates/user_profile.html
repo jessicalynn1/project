@@ -5,18 +5,22 @@
 {% block title %} Welcome! {% endblock %}
 
 {% block body %}
-    <h1> Would you like to see your previous saved itinerary? </h1>
+    <h1>Here is your saved itinerary: </h1>
 
     <body>
 <!-- need buttons with links to take us to the correct URL -->
-            <p> <input type="submit" value="Yes"> </p>
-            <p> <input type="submit" value="No, take me to the form"> </p>
-
+<!-- just have the itinerary load on the page when they login then ask if they want a new one -->
+            <ol id="saved-result">
+                {% for ride in saved_result %}
+                <li>{{ ride }}</li>
+            </ol>
+            {% endfor %}
     </body>
+    <h2> Would you like to create a new itinerary? </h2>
+    
+    <p> <input type="submit" value="Yes"> </p>
 
-<ol>
-    <!-- Print itinerary here -->
-</ol>
+    <br>
 {% endblock %}
 
 <!-- other option -->

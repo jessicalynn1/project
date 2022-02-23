@@ -52,7 +52,17 @@ def save_result(id, form_id, ride_id):
 
     return result
 
-print(save_result)
+def print_result(id):     # , form_id, ride_id)
+    """Print dream day result on user profile page"""
+
+    # id = FormRide(id=id)
+    # form_id = FormRide(form_id=form_id)
+    # ride_id = Ride(ride_id=id)
+    # ride_name = Ride(name=ride_id)
+    
+    # result = FormRide(id=id, form_id=form_id, ride_id=ride_name)
+
+    return FormRide.query.filter_by(id=id).all()
 
 def create_ride(name):
     """Create and return a ride."""
