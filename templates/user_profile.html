@@ -5,23 +5,23 @@
 {% block title %} Welcome! {% endblock %}
 
 {% block body %}
-    <h1>Here is your saved itinerary: </h1>
 
-    <body id="saved-result">
-<!-- need buttons with links to take us to the correct URL -->
-<!-- just have the itinerary load on the page when they login then ask if they want a new one -->
-            <ol>
-                <!-- need to figure out why the first ride is separate in the list -->
+
+    <body>
+    <section id="saved-result">
+        <h1>Here is your saved itinerary: </h1>
+            <ol id="result">
                 {% for ride in ride_name %}
                 <li>{{ ride.name }}</li>
-            </ol>
             {% endfor %}
-    </body>
-    <h2> Would you like to create a new itinerary? </h2>
+        </body>
+
+<h2> Would you like to create a new itinerary? </h2>
     
-    <p> <input type="submit" value="Yes"> </p>
+    <p> <a href=form > <button style="height:75px;width:150px"> Yes </button></a> </p>
 
     <br>
+
 {% endblock %}
 
 <!-- other option -->

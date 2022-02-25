@@ -15,9 +15,19 @@
         {{ msg }}
       </p>
     {% endfor %}
-    
+    <h1> Dream Disney Day </h1>
+    {% if session['pkey'] %}
+    "Hi User!"
+    {% endif %}
     {% block body %}{% endblock %}
 
     {% block after_body %}{% endblock %}
   </body>
 </html>
+
+<!-- this is where i would create nav bar add logout button here -->
+<!-- render things whether or not person is logged in -->
+<!-- logout button
+navigation bar, title of site, takes you to home, to itinerary, logout
+base html - is where nav bar lives, base html
+dream disney, create a home page, logout -->

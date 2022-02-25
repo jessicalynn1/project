@@ -57,7 +57,7 @@ def log_in():
         if checked_user:
             session['pkey'] = checked_user
             flash ("Success! You are logged in!")
-            return redirect("/form")
+            return redirect("/user_profile")
         else:
             flash ("Wrong password. Please try again.")
     else:
