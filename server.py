@@ -124,6 +124,8 @@ def results_page():
 
     itinerary_set = set()
 
+# could write a function for these below
+# query on ridecategory join on category and filter by category id
 
     if a_travel_grp == 'Adults; no kids':
         c_id = crud.get_category_by_name('Adults').id

@@ -35,6 +35,7 @@ def check_user_password(email, password):
         return user.user_id
     else:
         return None
+
         
 def all_forms_by_user(user_id):
     """Shows all itineraries of one user."""
@@ -76,10 +77,11 @@ def get_ride_by_name(name):
 
     return Ride.query.filter_by(name=name).first()
 
-def get_category_by_name(name):
-    """Query a category by its name"""
+def get_ride_category(name):
+    """Get a ride category by its name"""
 
-    return Category.query.filter_by(name=name).first()
+
+    return Ride.join(RideCategory).join(Category).filter(Category.name==name).all()
 
 def create_ride_category(ride_id, category_id):
     """Creates an object between a ride and its category"""
