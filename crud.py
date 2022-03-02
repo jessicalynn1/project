@@ -31,10 +31,10 @@ def check_user_password(email, password):
     
     user = User.query.filter_by(email=email, password=password).first()
 
-    if user.password == password:
-        return user.user_id
+    if user:
+        return True
     else:
-        return None
+        return False
 
         
 def all_forms_by_user(user_id):

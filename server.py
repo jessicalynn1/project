@@ -47,15 +47,15 @@ def log_in():
 
     email = request.form.get("email")
     password = request.form.get("password")
-    
-    user_exist = crud.get_user_by_email(email)
-    # check_password = crud.check_user_password(password)
+    # think about encoding the password, "hash" them
+
+    user = crud.get_user_by_email(email)
     user_profile = session.get("results", {})
 
-    if user_exist:
+    if user:
         checked_user = crud.check_user_password(email, password)
         if checked_user:
-            session['pkey'] = checked_user
+            session['pkey'] = user.user_id
             flash ("Success! You are logged in!")
             return redirect("/user_profile")
         else:
