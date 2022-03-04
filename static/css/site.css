@@ -1,0 +1,65 @@
+/* Headings */
+h1 {
+    font-family: 'Cursive', brushscript;
+    color: rgb(235, 155, 35);
+    font-size: 35px;
+}
+
+h2 {
+    font-family: 'Consolas', monospace;
+    color: rgb(2, 2, 12);
+}
+
+.container {
+    width: 100%;
+    white-space: nowrap;
+}
+
+/* Body */
+body {
+    font-family: 'Consolas', monospace;
+    color: darkslategrey;
+    background-color: rgb(212, 234, 240);
+    display:block;
+    width:100%;
+    height:900px;
+    overflow:scroll;
+}
+
+/* Image */
+img {
+    display: block;
+    object-fit: cover;
+    width: auto;
+    height:500px;
+}
+
+/* Flash */
+.flash-msg {
+    font-family: 'Consolas', monospace;
+    color: #FFF;
+    background-color: #050e14;
+    font-size: 20px; line-height: 20px; padding: 10px;
+}
+
+/* Forms */
+input[type="text"] {
+    width: 200px;
+    vertical-align: top;
+}
+
+.form-control {
+    width: 100px;
+}
+
+
+/* Button */
+.red_button {
+    color: rgba(238, 23, 33, 0.952); font-size: 30px; line-height: 24px; padding: 10px; border-top-left-radius: 8px; border-top-right-radius: 8px; border-bottom-right-radius: 8px; border-bottom-left-radius: 8px; font-family: Georgia, serif; font-weight: normal; text-decoration: none; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-variant-east-asian: normal; font-variant-position: normal; text-transform: none; background-image: linear-gradient(to right, rgb(28, 110, 164) 0%, rgb(35, 136, 203) 50%, rgb(20, 78, 117) 100%); box-shadow: rgb(0, 0, 0) 5px 5px 15px 5px; border: 2px solid rgb(28, 110, 164); display: inline-block;}
+    .myButton:hover {
+    background: #1C6EA4; }
+    .myButton:active {
+    background: #071d2b; 
+}
+
+

@@ -65,6 +65,20 @@ def log_in():
     
     return redirect("/")
 
+@app.route("/logout")
+def logout():
+    """User must be logged in."""
+    
+    if "pkey" in session:
+        del session["pkey"]
+        flash("Logged Out.")
+    return redirect("/")
+
+    # if "pkey" not in session:
+    #     # return redirect('/')
+    #     # del session["pkey"]
+    #     flash("You are not logged in.")
+
 
 @app.route("/rides")
 def rides_page():
@@ -82,16 +96,11 @@ def _filter_rides():
     
     rides = request.form.getlist("ride")
     category = request.form.get("category")
-    print(rides, "*****SELECTED RIDES****")
-    print(category, "*****SELECTED CATEGORY****")
     
     for ride in rides:
         db_ride = crud.get_ride_by_name(ride)
-        print(db_ride, "*****DB RIDE****")
         db_category = crud.get_category_by_name(category)
-        print(db_category, "*****DB CATEGORY****")
         db_paired = RideCategory.query.filter_by(ride_id=db_ride.id, category_id=db_category.id).first()
-        print(db_paired, "*****DB PAIRED****")
         if not db_paired:
             obj = RideCategory(ride_id=db_ride.id, category_id=db_category.id)
             db.session.add(obj)
@@ -206,17 +215,13 @@ def ride_filter():
     return render_template("ride_filter.html", rides=rides, categories=categories)
 
 
-
 @app.route("/user_profile")
 def user_profile():
     """User's first page upon second login"""
 
-    #if user wants to see old itinerary, take them to results route
-    #if user wants to fill out a new form, take them to blank form route
     # order_desc = sqlalchemy.sql.expression.desc(Form.id)
     form = Form.query.filter_by(user_id=session['pkey']).order_by(Form.id.desc()).first()
     saved_result = FormRide.query.filter_by(form_id=form.id).all()
-    # ride_id = 
     ride_id_list = []
 
     for obj in saved_result:
@@ -224,7 +229,6 @@ def user_profile():
         ride_id_list.append(ride_id)
 
     ride_name = Ride.query.filter(Ride.id.in_(ride_id_list)).all()
-
 
     return render_template("user_profile.html", saved_result=saved_result, ride_name=ride_name) #will need to render new route based on reply
 
