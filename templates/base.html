@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -9,7 +10,11 @@
 
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
-      <a class="navbar-brand"> Dream Disney Day </a>
+      {% if "pkey" in session %}
+      <a class="navbar-brand" href="/user_profile"> Dream Disney Day </a>
+      {% else %}
+      <a class="navbar-brand" href="/"> Dream Disney Day </a>
+      {% endif %}
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -43,7 +48,6 @@
   
   {% block body %}{% endblock %}
 
-  {% block after_body %}{% endblock %}
 </body>
   </head>
 </html>

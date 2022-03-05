@@ -224,13 +224,16 @@ def user_profile():
     saved_result = FormRide.query.filter_by(form_id=form.id).all()
     ride_id_list = []
 
+
     for obj in saved_result:
         ride_id = obj.ride_id
         ride_id_list.append(ride_id)
 
     ride_name = Ride.query.filter(Ride.id.in_(ride_id_list)).all()
+    ride_category = Category.query.join(RideCategory).all()
 
-    return render_template("user_profile.html", saved_result=saved_result, ride_name=ride_name) #will need to render new route based on reply
+    return render_template("user_profile.html", saved_result=saved_result, ride_name=ride_name, ride_category=ride_category) 
+    #will need to render new route based on reply
 
 
 if __name__ == "__main__":

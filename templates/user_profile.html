@@ -11,8 +11,11 @@
     <section id="saved-result">
         <h1>Here is your saved itinerary: </h1>
             <ol id="result">
-                {% for ride in ride_name %}
-                <li>{{ ride.name }}</li>
+                {% for category in ride_category %}
+                    <li> {{ category.name }}  </li>
+                    <!-- {% for ride in ride_name %}                   
+                        <li>{{ ride.name }} </li> -->
+            <!-- {% endfor %}  -->
             {% endfor %}
         </body>
 
