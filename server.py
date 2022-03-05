@@ -230,10 +230,31 @@ def user_profile():
         ride_id_list.append(ride_id)
 
     ride_name = Ride.query.filter(Ride.id.in_(ride_id_list)).all()
-    ride_category = Category.query.join(RideCategory).all()
+    # ride_category = Category.query.join(RideCategory).filter(ride_name).all()
+    # print("Ride name below")
+    # print(ride_name)
+    # print("Ride category below")
+    # print(ride_category)
+    # ride_category = (f"""select name from categories""")
+    # category_results = db.session.execute(ride_category)
+    # print(category_results)
+    
+    for ride in ride_name:
+        ride_id = ride.id
 
-    return render_template("user_profile.html", saved_result=saved_result, ride_name=ride_name, ride_category=ride_category) 
-    #will need to render new route based on reply
+    ride_category_objects = RideCategory.query.filter(RideCategory.ride_id == ride_id).all()
+    category_object = Category.query.get(ride_category_objects.ride_id)
+
+    # for each_rco in ride_category_objects:
+    #     category_object = Category.query.get(each_rco.category_id)
+
+
+    category_name = Category.query.filter(Category.id == category_object.id).all()
+
+
+    return render_template("user_profile.html", saved_result=saved_result, 
+            ride_name=ride_name, category_name=category_name) 
+
 
 
 if __name__ == "__main__":
