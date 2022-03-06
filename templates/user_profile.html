@@ -8,26 +8,15 @@
 
 
     <body>
-    <section id="saved-result">
+    <section id="ride_dict">
         <h1>Here is your saved itinerary: </h1>
         <ol id="result">
-            {% for ride in ride_name %}
-            <li>{{ ride.name }}</li>
-        {% endfor %}
-    
-        <table>
-            {% for ii in category_name %}
-              <tr>
-                <td>{{ ii.name }} </td> 
-                <td>{{ ii.name }} </td> 
-              </tr>
-              <tr>
-                <td>{{ ii.name }} </td> 
-                <td>{{ ii.name }} </td> 
-              </tr>
-                {% endfor %}
-          </table>
-        
+            {% for key in ride_dict %}
+            <li>{{ key.name }}</li>
+            {% for value in ride_dict[key] %}
+                <li>{{ value.name }}</li>
+            {% endfor %}
+            {% endfor %}    
     </body>
 
 <h2> Would you like to create a new itinerary? </h2>

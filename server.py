@@ -219,41 +219,50 @@ def ride_filter():
 def user_profile():
     """User's first page upon second login"""
 
-    # order_desc = sqlalchemy.sql.expression.desc(Form.id)
     form = Form.query.filter_by(user_id=session['pkey']).order_by(Form.id.desc()).first()
     saved_result = FormRide.query.filter_by(form_id=form.id).all()
     ride_id_list = []
 
+    ride_dict = {}
 
-    for obj in saved_result:
-        ride_id = obj.ride_id
-        ride_id_list.append(ride_id)
+    category_name = saved_result[0].ride.ride_categories[0].category.name
+    ride_name = saved_result[0].ride.name
 
-    ride_name = Ride.query.filter(Ride.id.in_(ride_id_list)).all()
-    # ride_category = Category.query.join(RideCategory).filter(ride_name).all()
-    # print("Ride name below")
-    # print(ride_name)
-    # print("Ride category below")
-    # print(ride_category)
-    # ride_category = (f"""select name from categories""")
-    # category_results = db.session.execute(ride_category)
-    # print(category_results)
+    i = 0
+
+    for i in range(len(saved_result)):
+        curr_category = saved_result[i].ride.ride_categories[i].category.name  #wont work because wont use all categories 
+        curr_ride_name = saved_result[i].ride.name
+        if curr_category in ride_dict:
+            ride_dict[curr_category].append(curr_ride_name)
+        else:
+            ride_dict[curr_category] = [curr_ride_name]
+
+    print(ride_dict)
+
+    #     ride_name = Ride.query.filter(Ride.id.in_(ride_id_list)).all()
+    # # ride_category = Category.query.join(RideCategory).filter(ride_name).all()
     
-    for ride in ride_name:
-        ride_id = ride.id
+    #     for ride in ride_name:
+    #         ride_id = ride.id
 
-    ride_category_objects = RideCategory.query.filter(RideCategory.ride_id == ride_id).all()
-    category_object = Category.query.get(ride_category_objects.ride_id)
+    #         ride_category_objects = RideCategory.query.filter(RideCategory.ride_id == ride_id).all()
+    #     # category_object = Category.query.get(ride_category_objects.ride_id)
 
-    # for each_rco in ride_category_objects:
-    #     category_object = Category.query.get(each_rco.category_id)
+    #         for each_rco in ride_category_objects:
+    #             category_object = Category.query.get(each_rco.category_id)
 
+    #         # category_name = Category.query.filter(Category.id == category_object.id).all()
+    #         category_name = Category.query.filter(Category.id.in_(category_object.id)).all()
 
-    category_name = Category.query.filter(Category.id == category_object.id).all()
+    #         ride_dict = {}
+
+    #         for category in category_name:
+    #             ride_dict[category] = ride_name
 
 
     return render_template("user_profile.html", saved_result=saved_result, 
-            ride_name=ride_name, category_name=category_name) 
+            ride_name=ride_name, ride_dict=ride_dict) 
 
 
 
