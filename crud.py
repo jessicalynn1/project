@@ -25,17 +25,6 @@ def get_user_by_email(email):
     
     return User.query.filter_by(email=email).first()
 
-def check_user_password(email, password):
-    """If password entered matches password in database, return True.
-        If password does not  match, return False."""
-
-    user = User.query.filter_by(email=email, password=password)
-
-    if user:
-        return True
-    else:
-        return False
-
         
 def all_forms_by_user(user_id):
     """Shows all itineraries of one user."""
@@ -53,15 +42,8 @@ def save_result(id, form_id, ride_id):
 
     return result
 
-def print_result(id):     # , form_id, ride_id)
+def print_result(id):
     """Print dream day result on user profile page"""
-
-    # id = FormRide(id=id)
-    # form_id = FormRide(form_id=form_id)
-    # ride_id = Ride(ride_id=id)
-    # ride_name = Ride(name=ride_id)
-    
-    # result = FormRide(id=id, form_id=form_id, ride_id=ride_name)
 
     return FormRide.query.filter_by(id=id).all()
 

@@ -9,10 +9,7 @@ import webbrowser
 import requests
 import json 
 from pprint import pprint
-# from cryptography.fernet import Fernet
-
-# key = Fernet.generate_key()
-# fernet = Fernet(key)
+import bcrypt
 
 app = Flask(__name__)
 app.secret_key = "dev"
@@ -49,16 +46,14 @@ def log_in():
     """Existing user log in."""
 
     email = request.form.get("email")
-    password = request.form.get("password")
-    # password = encpassword
-    # think about encoding the password, "hash" them
+    password = request.form.get("password").encode("utf-8")
+    hashed = bcrypt.hashpw(password, bcrypt.gensalt())
 
     user = crud.get_user_by_email(email)
     user_profile = session.get("results", {})
 
     if user:
-        checked_user = crud.check_user_password(email, password)
-        if checked_user:
+        if bcrypt.checkpw(password, hashed):
             session['pkey'] = user.user_id
             flash ("Success! You are logged in!")
             return redirect("/user_profile")
@@ -188,7 +183,7 @@ def results_page():
     db.session.add(new_profile)
     db.session.commit()
 
-
+    print(new_profile)
     form_id = new_profile.id
 
     for ride_category in itinerary_set:
