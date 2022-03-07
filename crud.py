@@ -28,8 +28,8 @@ def get_user_by_email(email):
 def check_user_password(email, password):
     """If password entered matches password in database, return True.
         If password does not  match, return False."""
-    
-    user = User.query.filter_by(email=email, password=password).first()
+
+    user = User.query.filter_by(email=email, password=password)
 
     if user:
         return True

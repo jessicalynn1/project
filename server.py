@@ -9,7 +9,10 @@ import webbrowser
 import requests
 import json 
 from pprint import pprint
+# from cryptography.fernet import Fernet
 
+# key = Fernet.generate_key()
+# fernet = Fernet(key)
 
 app = Flask(__name__)
 app.secret_key = "dev"
@@ -47,6 +50,7 @@ def log_in():
 
     email = request.form.get("email")
     password = request.form.get("password")
+    # password = encpassword
     # think about encoding the password, "hash" them
 
     user = crud.get_user_by_email(email)
@@ -73,11 +77,6 @@ def logout():
         del session["pkey"]
         flash("Logged Out.")
     return redirect("/")
-
-    # if "pkey" not in session:
-    #     # return redirect('/')
-    #     # del session["pkey"]
-    #     flash("You are not logged in.")
 
 
 @app.route("/rides")
@@ -221,24 +220,23 @@ def user_profile():
 
     form = Form.query.filter_by(user_id=session['pkey']).order_by(Form.id.desc()).first()
     saved_result = FormRide.query.filter_by(form_id=form.id).all()
-    ride_id_list = []
+    # ride_id_list = []
 
     ride_dict = {}
 
-    category_name = saved_result[0].ride.ride_categories[0].category.name
-    ride_name = saved_result[0].ride.name
+    # category_name = saved_result.ride.ride_categories.category.name
+    # ride_name = saved_result.ride.name
 
-    i = 0
+    for form_ride in saved_result:
+        for category_id in form_ride.ride.ride_categories:
+            for category_name in category_id.category.name:
+                # category_name = category_name.split()
+                if category_name in ride_dict:
+                    ride_dict[category_name].append(form_ride.ride.name)
+                else:
+                    ride_dict[category_name] = [form_ride.ride.name]
+    # print(ride_dict)
 
-    for i in range(len(saved_result)):
-        curr_category = saved_result[i].ride.ride_categories[i].category.name  #wont work because wont use all categories 
-        curr_ride_name = saved_result[i].ride.name
-        if curr_category in ride_dict:
-            ride_dict[curr_category].append(curr_ride_name)
-        else:
-            ride_dict[curr_category] = [curr_ride_name]
-
-    print(ride_dict)
 
     #     ride_name = Ride.query.filter(Ride.id.in_(ride_id_list)).all()
     # # ride_category = Category.query.join(RideCategory).filter(ride_name).all()
@@ -261,8 +259,7 @@ def user_profile():
     #             ride_dict[category] = ride_name
 
 
-    return render_template("user_profile.html", saved_result=saved_result, 
-            ride_name=ride_name, ride_dict=ride_dict) 
+    return render_template("user_profile.html", saved_result=saved_result,  ride_dict=ride_dict) 
 
 
 
