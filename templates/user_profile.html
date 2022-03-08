@@ -11,15 +11,32 @@
     <section id="ride_dict">
         <h1>Here is your saved itinerary: </h1>
         <ol id="result">
-            <li>  {{ ride_dict }}</li>
 
-    </body>
-
-<h2> Would you like to create a new itinerary? </h2>
-    
-    <p> <a href=form > <button style="height:75px;width:150px"> Yes </button></a> </p>
-
-    <br>
+            <table>
+                <tr id="table_heading">
+                    <th> Ride Category </th>
+                    </tr>
+                    <tr>
+                    <td> 
+                    {% for k, v in ride_dict.items() %}
+                     <li>{{ k }}</li>
+                    {% endfor %}
+                </td>
+              </table>
+            </tr>
+            <table>
+            <tr id="table_heading">
+                <th> List of Rides </th>
+                </tr>
+            <tr id="ride_list">
+                <td>
+            {% for k, v in ride_dict.items() %}
+                <ul>{{ v }} </ul>
+              {% endfor %}
+            </td>
+        </tr>
+              </table>
+        </body>
 
 {% endblock %}
 
