@@ -201,12 +201,21 @@ def results_page():
 
     form_id = new_profile.id
 
-    for ride_category in itinerary_set:
-        saved_result = FormRide(form_id=form_id, ride_id=ride_category.ride.id)
-        db.session.add(saved_result)
-        db.session.commit()
+    itinerary_dict = {}
 
-    return render_template("results.html", itinerary_set=itinerary_set, trip_name=trip_name, 
+    # create dictionary from itinerary set
+
+    # for ride_obj in itinerary_set:
+    #     if ride_obj.ride.id not in unique_itinerary_set:
+    #         unique_itinerary_set.add(ride_obj)
+    # print(unique_itinerary_set)
+
+    # for ride_obj in unique_itinerary_set:
+    #     saved_result = FormRide(form_id=form_id, ride_id=ride_obj.ride.id)
+    #     db.session.add(saved_result)
+    #     db.session.commit()
+
+    return render_template("results.html", itinerary_dict=itinerary_dict, trip_name=trip_name, 
                     must_ride_1=must_ride_1, must_ride_2=must_ride_2, must_ride_3=must_ride_3)
 
     # figure out how to email the result to the user in 2.0
@@ -232,12 +241,15 @@ def user_profile():
 
     ride_dict = {}
 
+    # figure out why im getting duplicates in dictionary values
+
     for form_ride in saved_result:
-        for category in form_ride.ride.ride_categories:
-            if category.category.name in ride_dict:
-                ride_dict[category.category.name].append(form_ride.ride.name)
+        for ride_id in form_ride.ride.id:
+            if ride_id.ridecategory.category.name in ride_dict:
+                ride_dict[ride_id.ridecategory.category.name].append(form_ride.ride.name)
             else:
-                ride_dict[category.category.name] = [form_ride.ride.name]
+                ride_dict[ride_id.ridecategory.category.name] = [form_ride.ride.name]
+    print(ride_dict)
 
     return render_template("user_profile.html", saved_result=saved_result,  ride_dict=ride_dict) 
 

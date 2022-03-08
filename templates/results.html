@@ -29,10 +29,8 @@
 <br>
     <body>
         <ol id="itinerary-body">
-            {% for ride in itinerary_set %}
-            {% if ride.ride.name not in itinerary_set %}
-            <li> {{ride.ride.name}}</li>
-            {% endif %}
+            {% for ride in unique_itinerary_set %}
+              <li> {{ride.ride.name}}</li>
             {% endfor %}
     </body>
 <br>
