@@ -30,7 +30,9 @@
     <body>
         <ol id="itinerary-body">
             {% for ride in itinerary_set %}
+            {% if ride.ride.name not in itinerary_set %}
             <li> {{ride.ride.name}}</li>
+            {% endif %}
             {% endfor %}
     </body>
 <br>

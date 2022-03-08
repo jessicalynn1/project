@@ -126,6 +126,7 @@ def results_page():
 
 
     itinerary_set = set()
+    # itinerary_dict = {}
 
 # could write a function for these below
 # query on ridecategory join on category and filter by category id
@@ -134,47 +135,55 @@ def results_page():
         c_id = crud.get_category_by_name('Adults').id
         rides = RideCategory.query.filter_by(category_id=c_id).all()
         itinerary_set.update(rides)
-
+        # itinerary_dict[c_id] = [rides]
 
     if a_travel_grp == 'Family; kids under 8':
         c_id = crud.get_category_by_name('Kid').id
         rides = RideCategory.query.filter_by(category_id=c_id).all()
         itinerary_set.update(rides)
+        # itinerary_dict[c_id] = [rides]
 
     if a_travel_grp == 'Family; kids over 8':
         c_id = crud.get_category_by_name('Thrill').id
         rides = RideCategory.query.filter_by(category_id=c_id).all()
         itinerary_set.update(rides)
+        # itinerary_dict[c_id] = [rides]
     
     if a_travel_grp == 'Large group, 6+':
         c_id = crud.get_category_by_name('Large Group').id
         rides = RideCategory.query.filter_by(category_id=c_id).all()
         itinerary_set.update(rides)
+        # itinerary_dict[c_id] = [rides]
 
     if a_weather == 'hot':
         c_id = crud.get_category_by_name('Water').id
         rides = RideCategory.query.filter_by(category_id=c_id).all()
         itinerary_set.update(rides)
+        # itinerary_dict[c_id] = [rides]
 
     if a_dark_ride:
         c_id = crud.get_category_by_name('Dark').id
         rides = RideCategory.query.filter_by(category_id=c_id).all()
         itinerary_set.update(rides)
+        # itinerary_dict[c_id] = [rides]
 
     if a_thrill_ride:
         c_id = crud.get_category_by_name('Thrill').id
         rides = RideCategory.query.filter_by(category_id=c_id).all()
         itinerary_set.update(rides)
+        # itinerary_dict[c_id] = [rides]
 
     if a_motion_sick == 'no':
         c_id = crud.get_category_by_name('Motion').id
         rides = RideCategory.query.filter_by(category_id=c_id).all()
         itinerary_set.update(rides)
+        # itinerary_dict[c_id] = [rides]
 
     if a_foodie:
         c_id = crud.get_category_by_name('Foodie').id
         rides = RideCategory.query.filter_by(category_id=c_id).all()
         itinerary_set.update(rides)
+        # itinerary_dict[c_id] = [rides]
 
 
     new_profile = Form(user_id=session['pkey'], q_travel_grp=a_travel_grp, q_weather=a_weather, q_dark_ride=a_dark_ride,
@@ -183,8 +192,20 @@ def results_page():
     db.session.add(new_profile)
     db.session.commit()
 
-    print(new_profile)
+    # print(new_profile)
     form_id = new_profile.id
+    # ride_id = new_profile.formride.ride_id
+    # print(itinerary_dict)
+    # ride_id = RideCategory(ride_id=itinerary_dict.values(), category_id=itinerary_dict.keys())
+
+    # for rc_obj in itinerary_dict.values():
+    #     if rc_obj.category.name not in itinerary_dict.values():
+    #         itinerary_dict.values().append(rc_obj.category.name)
+    # ride_obj = itinerary_dict.values()
+    # ride_id = ride_obj[0].ride.id
+    # saved_result = FormRide(form_id=form_id, ride_id=ride_id)
+    # db.session.add(saved_result)
+    # db.session.commit()
 
     for ride_category in itinerary_set:
         saved_result = FormRide(form_id=form_id, ride_id=ride_category.ride.id)
@@ -223,14 +244,16 @@ def user_profile():
     # ride_name = saved_result.ride.name
 
     for form_ride in saved_result:
-        for category_id in form_ride.ride.ride_categories:
-            for category_name in category_id.category.name:
+        for category in form_ride.ride.ride_categories:
+            # print(category)
+            # for category_name in category.category.name:
+            #     print(category_name)
                 # category_name = category_name.split()
-                if category_name in ride_dict:
-                    ride_dict[category_name].append(form_ride.ride.name)
-                else:
-                    ride_dict[category_name] = [form_ride.ride.name]
-    # print(ride_dict)
+            if category.category.name in ride_dict:
+                ride_dict[category.category.name].append(form_ride.ride.name)
+            else:
+                ride_dict[category.category.name] = [form_ride.ride.name]
+    print(ride_dict)
 
 
     #     ride_name = Ride.query.filter(Ride.id.in_(ride_id_list)).all()
