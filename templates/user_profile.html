@@ -12,31 +12,20 @@
         <h1>Here is your saved itinerary: </h1>
         <ol id="result">
 
-            <table>
-                <tr id="table_heading">
-                    <th> Ride Category </th>
-                    </tr>
-                    <tr>
-                    <td> 
+            <br>
+            <body>
+                <ul id="itinerary-body">
                     {% for k, v in ride_dict.items() %}
-                     <li>{{ k }}</li>
-                    {% endfor %}
-                </td>
-              </table>
-            </tr>
-            <table>
-            <tr id="table_heading">
-                <th> List of Rides </th>
-                </tr>
-            <tr id="ride_list">
-                <td>
-            {% for k, v in ride_dict.items() %}
-                <ul>{{ v }} </ul>
-              {% endfor %}
-            </td>
-        </tr>
-              </table>
-        </body>
+                      <li> {{ k }}</li>
+                      <ol>
+                     {% for ride in v %}
+                      <li> {{ ride }} </li>
+                      {% endfor %}
+                    </ol>
+                      {% endfor %}
+            </body>
+        <br>
+        <h3>We hope you have a magical day at the happiest place on earth! </h3>
 
 {% endblock %}
 

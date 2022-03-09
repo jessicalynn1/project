@@ -28,10 +28,15 @@
 <br>
 <br>
     <body>
-        <ol id="itinerary-body">
-            {% for ride in unique_itinerary_set %}
-              <li> {{ride.ride.name}}</li>
-            {% endfor %}
+        <ul id="itinerary-body">
+            {% for k, v in itinerary_dict.items() %}
+              <li> {{ k }}</li>
+              <ol>
+             {% for ride in v %}
+              <li> {{ ride }} </li>
+              {% endfor %}
+            </ol>
+              {% endfor %}
     </body>
 <br>
 <h3>We hope you have a magical day at the happiest place on earth! </h3>

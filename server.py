@@ -203,17 +203,15 @@ def results_page():
 
     itinerary_dict = {}
 
-    # create dictionary from itinerary set
+    for ride_obj in itinerary_set:
+        if ride_obj.category.name not in itinerary_dict:
+            itinerary_dict[ride_obj.category.name] = [ride_obj.ride.name]
+        else:
+            itinerary_dict[ride_obj.category.name].append(ride_obj.ride.name)
+        saved_result = FormRide(form_id=form_id, ride_id=ride_obj.ride.id)
+        db.session.add(saved_result)
+        db.session.commit()
 
-    # for ride_obj in itinerary_set:
-    #     if ride_obj.ride.id not in unique_itinerary_set:
-    #         unique_itinerary_set.add(ride_obj)
-    # print(unique_itinerary_set)
-
-    # for ride_obj in unique_itinerary_set:
-    #     saved_result = FormRide(form_id=form_id, ride_id=ride_obj.ride.id)
-    #     db.session.add(saved_result)
-    #     db.session.commit()
 
     return render_template("results.html", itinerary_dict=itinerary_dict, trip_name=trip_name, 
                     must_ride_1=must_ride_1, must_ride_2=must_ride_2, must_ride_3=must_ride_3)
@@ -243,15 +241,15 @@ def user_profile():
 
     # figure out why im getting duplicates in dictionary values
 
-    for form_ride in saved_result:
-        for ride_id in form_ride.ride.id:
-            if ride_id.ridecategory.category.name in ride_dict:
-                ride_dict[ride_id.ridecategory.category.name].append(form_ride.ride.name)
-            else:
-                ride_dict[ride_id.ridecategory.category.name] = [form_ride.ride.name]
+    for ride_obj in saved_result:
+        for rc_obj in ride_obj:
+            if rc_obj.category.name not in ride_dict:
+                ride_dict[ride_obj.category.name] = [ride_obj.ride.name]
+        else:
+            ride_dict[ride_obj.category.name].append(ride_obj.ride.name)       
     print(ride_dict)
 
-    return render_template("user_profile.html", saved_result=saved_result,  ride_dict=ride_dict) 
+    return render_template("user_profile.html", saved_result=saved_result, ride_dict=ride_dict) 
 
 
 
