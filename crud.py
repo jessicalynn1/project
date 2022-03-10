@@ -1,11 +1,14 @@
 """create, read, update, delete; import from model your db; this is where you define functions, access the html, and return data"""
 
 from model import db, User, Form, connect_to_db, Ride, FormRide, RideCategory, Category
+import bcrypt
 
 def create_user(email, password):
     """Create and return a new user."""
 
     user = User(email=email, password=password)
+    hashed = bcrypt.hashpw(password, bcrypt.gensalt())
+    # this is where i would hash password
 
     return user
 

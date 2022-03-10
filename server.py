@@ -204,17 +204,24 @@ def results_page():
     itinerary_dict = {}
 
     for ride_obj in itinerary_set:
-        if ride_obj.category.name not in itinerary_dict:
-            itinerary_dict[ride_obj.category.name] = [ride_obj.ride.name]
-        else:
-            itinerary_dict[ride_obj.category.name].append(ride_obj.ride.name)
-        saved_result = FormRide(form_id=form_id, ride_id=ride_obj.ride.id)
+        itinerary_dict[ride_obj.ride_id] = ride_obj
+
+    for ride_obj in itinerary_dict.values():
+        saved_result = FormRide(form_id=form_id, ride_id=ride_obj.ride_id)
         db.session.add(saved_result)
         db.session.commit()
+    
+    results_dict = {}
+
+    for ride_obj in itinerary_set:
+        if ride_obj.category.name not in results_dict:
+            results_dict[ride_obj.category.name] = [ride_obj.ride.name]
+        else:
+            results_dict[ride_obj.category.name].append(ride_obj.ride.name)
 
 
-    return render_template("results.html", itinerary_dict=itinerary_dict, trip_name=trip_name, 
-                    must_ride_1=must_ride_1, must_ride_2=must_ride_2, must_ride_3=must_ride_3)
+    return render_template("results.html", results_dict=results_dict, trip_name=trip_name, 
+                    must_ride_1=must_ride_1, must_ride_2=must_ride_2, must_ride_3=must_ride_3,)
 
     # figure out how to email the result to the user in 2.0
 
@@ -236,20 +243,23 @@ def user_profile():
 
     form = Form.query.filter_by(user_id=session['pkey']).order_by(Form.id.desc()).first()
     saved_result = FormRide.query.filter_by(form_id=form.id).all()
+    print(saved_result)
 
     ride_dict = {}
 
-    # figure out why im getting duplicates in dictionary values
-
     for ride_obj in saved_result:
-        for rc_obj in ride_obj:
-            if rc_obj.category.name not in ride_dict:
-                ride_dict[ride_obj.category.name] = [ride_obj.ride.name]
-        else:
-            ride_dict[ride_obj.category.name].append(ride_obj.ride.name)       
+        ride = ride_obj.ride
+        ride_id = ride.id
+        ride_categories = RideCategory.query.filter_by(ride_id=ride_id).all()
+        for rc in ride_categories:
+            rc_name = rc.category.name
+            if rc_name not in ride_dict:
+                ride_dict[rc_name] = [ride.name]
+            else:
+                ride_dict[rc_name].append(ride.name)       
     print(ride_dict)
 
-    return render_template("user_profile.html", saved_result=saved_result, ride_dict=ride_dict) 
+    return render_template("user_profile.html", ride_dict=ride_dict) 
 
 
 
