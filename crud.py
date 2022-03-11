@@ -7,7 +7,7 @@ def create_user(email, password):
     """Create and return a new user."""
 
     user = User(email=email, password=password)
-    hashed = bcrypt.hashpw(password, bcrypt.gensalt())
+    # hashed = bcrypt.hashpw(password, bcrypt.gensalt())
     # this is where i would hash password
 
     return user

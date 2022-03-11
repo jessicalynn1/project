@@ -241,9 +241,12 @@ def ride_filter():
 def user_profile():
     """User's first page upon second login"""
 
+    # if user does not have saved profile, redirect to form page
+
     form = Form.query.filter_by(user_id=session['pkey']).order_by(Form.id.desc()).first()
     saved_result = FormRide.query.filter_by(form_id=form.id).all()
     print(saved_result)
+    print(len(saved_result))
 
     ride_dict = {}
 
@@ -251,6 +254,8 @@ def user_profile():
         ride = ride_obj.ride
         ride_id = ride.id
         ride_categories = RideCategory.query.filter_by(ride_id=ride_id).all()
+        if item in ride_categories:
+            
         for rc in ride_categories:
             rc_name = rc.category.name
             if rc_name not in ride_dict:
