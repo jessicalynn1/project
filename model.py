@@ -94,7 +94,7 @@ class FormRide(db.Model):
     ride = db.relationship("Ride", backref="formride")
 
     def __repr__(self):
-        return f'<FormRide id={self.id} form_id={self.form_id} ride_id={self.ride_id}>'
+        return f'<FormRide id={self.id} form_id={self.form_id} ride_id={self.ride_id} '
 
 
 class RideCategory(db.Model):

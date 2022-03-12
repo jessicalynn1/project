@@ -89,7 +89,9 @@ def rides_page():
 def user_homepage():
     """Asks if you want a new itinerary or see saved."""
 
-    return render_template("user_homepage.html")
+    form = Form.query.filter_by(user_id=session['pkey']).order_by(Form.id.desc()).first()
+
+    return render_template("user_homepage.html", form=form)
 
 
 @app.route("/filter-ride", methods=["POST"])
@@ -124,14 +126,35 @@ def results_page():
     trip_name = request.form.getlist("trip-name")
     a_travel_grp = request.form.get("q_travel_grp")
     a_weather = request.form.get("q_weather")
-    a_dark_ride = bool(request.form.get("q_dark_ride"))
-    a_thrill_ride = bool(request.form.get("q_thrill_ride"))
-    a_motion_sick = bool(request.form.get("q_motion_sick"))
-    a_foodie = bool(request.form.get("q_foodie"))
+    if request.form.get("q_dark_ride") == "True":
+        a_dark_ride = True
+    else:
+        a_dark_ride = False
+    
+    if request.form.get("q_thrill_ride") == "True":
+        a_thrill_ride = True
+    else:
+        a_thrill_ride = False
+
+    a_motion_sick = request.form.get("q_motion_sick")
+
+    if request.form.get("q_motion_sick") == "True":
+        a_motion_sick = True
+    else:
+        a_motion_sick = False
+
+    if request.form.get("q_foodie") == "True":
+        a_foodie = True
+    else:
+        a_foodie = False
+
     must_ride_1 = request.form.get("must_ride_1")
     must_ride_2 = request.form.get("must_ride_2")
     must_ride_3 = request.form.get("must_ride_3")
 
+    # print("Print thrill", a_thrill_ride)
+    # print("Print dark", a_dark_ride)
+    # print(request.form)
 
     itinerary_set = set()
 
@@ -180,7 +203,7 @@ def results_page():
         itinerary_set.update(rides)
     print(itinerary_set)
 
-    if a_motion_sick == 'no':
+    if not a_motion_sick:
         c_id = crud.get_category_by_name('Motion').id
         rides = RideCategory.query.filter_by(category_id=c_id).all()
         itinerary_set.update(rides)
@@ -190,7 +213,7 @@ def results_page():
         c_id = crud.get_category_by_name('Foodie').id
         rides = RideCategory.query.filter_by(category_id=c_id).all()
         itinerary_set.update(rides)
-    print(itinerary_set)
+    # print(itinerary_set)
 
 
     new_profile = Form(user_id=session['pkey'], q_travel_grp=a_travel_grp, q_weather=a_weather, q_dark_ride=a_dark_ride,
@@ -210,7 +233,8 @@ def results_page():
         saved_result = FormRide(form_id=form_id, ride_id=ride_obj.ride_id)
         db.session.add(saved_result)
         db.session.commit()
-    
+
+
     results_dict = {}
 
     for ride_obj in itinerary_set:
@@ -241,12 +265,8 @@ def ride_filter():
 def user_profile():
     """User's first page upon second login"""
 
-    # if user does not have saved profile, redirect to form page
-
     form = Form.query.filter_by(user_id=session['pkey']).order_by(Form.id.desc()).first()
     saved_result = FormRide.query.filter_by(form_id=form.id).all()
-    print(saved_result)
-    print(len(saved_result))
 
     ride_dict = {}
 
@@ -254,15 +274,21 @@ def user_profile():
         ride = ride_obj.ride
         ride_id = ride.id
         ride_categories = RideCategory.query.filter_by(ride_id=ride_id).all()
-        if item in ride_categories:
-            
+
         for rc in ride_categories:
+            if rc.category.name == 'Thrill' and not form.q_thrill_ride:
+                continue
+            if rc.category.name == 'Dark' and not form.q_dark_ride:
+                continue
+            if rc.category.name == 'Motion' and not form.q_motion_sick:
+                continue
+            if rc.category.name == 'Foodie' and not form.q_foodie:
+                continue
             rc_name = rc.category.name
             if rc_name not in ride_dict:
                 ride_dict[rc_name] = [ride.name]
             else:
                 ride_dict[rc_name].append(ride.name)       
-    print(ride_dict)
 
     return render_template("user_profile.html", ride_dict=ride_dict) 
 
