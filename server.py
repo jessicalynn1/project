@@ -43,13 +43,17 @@ def register_user():
 @app.route("/login", methods=["POST"])
 def log_in():
     """Existing user log in."""
+    
     email = request.form.get("email")
-    password = request.form.get("password").encode("utf-8")
-    hashed = bcrypt.hashpw(password, bcrypt.gensalt())
+    password = request.form.get("password")
+    # hashed = bcrypt.hashpw(password, bcrypt.gensalt())
+    
     user = crud.get_user_by_email(email)
     user_profile = session.get("results", {})
+    
     if user:
-        if bcrypt.checkpw(password, hashed):
+        checked_user = crud.check_user_password(email, password)
+        if checked_user:
             session['pkey'] = user.user_id
             flash ("Success! You are logged in!")
             return redirect("/user_homepage")
@@ -157,49 +161,41 @@ def results_page():
         c_id = crud.get_category_by_name('Adults').id
         rides = RideCategory.query.filter_by(category_id=c_id).all()
         itinerary_set.update(rides)
-    print(itinerary_set)
-
+    
     if a_travel_grp == 'Family; kids under 8':
         c_id = crud.get_category_by_name('Kid').id
         rides = RideCategory.query.filter_by(category_id=c_id).all()
         itinerary_set.update(rides)
-    print(itinerary_set)
 
     if a_travel_grp == 'Family; kids over 8':
         c_id = crud.get_category_by_name('Thrill').id
         rides = RideCategory.query.filter_by(category_id=c_id).all()
         itinerary_set.update(rides)
-    print(itinerary_set)
     
     if a_travel_grp == 'Large group, 6+':
         c_id = crud.get_category_by_name('Large Group').id
         rides = RideCategory.query.filter_by(category_id=c_id).all()
         itinerary_set.update(rides)
-    print(itinerary_set)
 
     if a_weather == 'hot':
         c_id = crud.get_category_by_name('Water').id
         rides = RideCategory.query.filter_by(category_id=c_id).all()
         itinerary_set.update(rides)
-    print(itinerary_set)
 
     if a_dark_ride:
         c_id = crud.get_category_by_name('Dark').id
         rides = RideCategory.query.filter_by(category_id=c_id).all()
         itinerary_set.update(rides)
-    print(itinerary_set)
 
     if a_thrill_ride:
         c_id = crud.get_category_by_name('Thrill').id
         rides = RideCategory.query.filter_by(category_id=c_id).all()
         itinerary_set.update(rides)
-    print(itinerary_set)
 
     if not a_motion_sick:
         c_id = crud.get_category_by_name('Motion').id
         rides = RideCategory.query.filter_by(category_id=c_id).all()
         itinerary_set.update(rides)
-    print(itinerary_set)
 
     if a_foodie:
         c_id = crud.get_category_by_name('Foodie').id
@@ -266,17 +262,19 @@ def user_profile():
         ride_categories = RideCategory.query.filter_by(ride_id=ride_id).all()
 
         for rc in ride_categories:
+            if rc.category.name == 'Water' and form.q_weather != "hot":
+                continue
             if rc.category.name == 'Adults' and form.q_travel_grp != "Adults; no kids":
                 continue
             if rc.category.name == 'Kid' and form.q_travel_grp != "Family; kids under 8":
                 continue
-            if rc.category.name == 'Large Group' and form.q_travel_grp != "Large Group, 6+":
+            if rc.category.name == 'Large Group' and form.q_travel_grp != "Large group, 6+":
                 continue
             if rc.category.name == 'Thrill' and not form.q_thrill_ride:
                 continue
             if rc.category.name == 'Dark' and not form.q_dark_ride:
                 continue
-            if rc.category.name == 'Motion' and not form.q_motion_sick:
+            if rc.category.name == 'Motion' and form.q_motion_sick:
                 continue
             if rc.category.name == 'Foodie' and not form.q_foodie:
                 continue

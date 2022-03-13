@@ -28,11 +28,21 @@ def get_user_by_email(email):
     
     return User.query.filter_by(email=email).first()
 
+def check_user_password(email, password):
+    """If password entered matches password in databse, return True.
+        If password does not  match, return False."""
+    
+    user = User.query.filter_by(email=email).first()
+
+    if user.password == password:
+        return True
+    else:
+        return False
         
 def all_forms_by_user(user_id):
     """Shows all itineraries of one user."""
 
-    return Form.query.filter(Form.user_id == user_id).all()
+    return Form.query.filter_by(user_id=user_id).all()
 
 def save_result(id, form_id, ride_id):
     """Show dream day result"""

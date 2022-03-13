@@ -27,7 +27,7 @@ class FlaskTestsBasic(TestCase):
     def test_login_route(self):
         """Test login route."""
 
-        result = self.client.post("/login", follow_redirects=True)
+        result = self.client.get("/login")
         self.assertIn(b"Log In", result.data)
 
 class FlaskTests(TestCase):
