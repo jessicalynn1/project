@@ -14,7 +14,6 @@ import bcrypt
 app = Flask(__name__)
 app.secret_key = "dev"
 app.jinja_env.undefined = StrictUndefined
-# init_app(app)
 
 
 @app.route("/")
@@ -44,14 +43,11 @@ def register_user():
 @app.route("/login", methods=["POST"])
 def log_in():
     """Existing user log in."""
-
     email = request.form.get("email")
     password = request.form.get("password").encode("utf-8")
     hashed = bcrypt.hashpw(password, bcrypt.gensalt())
-
     user = crud.get_user_by_email(email)
     user_profile = session.get("results", {})
-
     if user:
         if bcrypt.checkpw(password, hashed):
             session['pkey'] = user.user_id
@@ -152,10 +148,6 @@ def results_page():
     must_ride_2 = request.form.get("must_ride_2")
     must_ride_3 = request.form.get("must_ride_3")
 
-    # print("Print thrill", a_thrill_ride)
-    # print("Print dark", a_dark_ride)
-    # print(request.form)
-
     itinerary_set = set()
 
 # could write a function for these below
@@ -213,7 +205,6 @@ def results_page():
         c_id = crud.get_category_by_name('Foodie').id
         rides = RideCategory.query.filter_by(category_id=c_id).all()
         itinerary_set.update(rides)
-    # print(itinerary_set)
 
 
     new_profile = Form(user_id=session['pkey'], q_travel_grp=a_travel_grp, q_weather=a_weather, q_dark_ride=a_dark_ride,
@@ -250,7 +241,6 @@ def results_page():
     # figure out how to email the result to the user in 2.0
 
 
-
 @app.route("/ride_filter")
 def ride_filter():
     """Put rides into category"""
@@ -276,6 +266,12 @@ def user_profile():
         ride_categories = RideCategory.query.filter_by(ride_id=ride_id).all()
 
         for rc in ride_categories:
+            if rc.category.name == 'Adults' and form.q_travel_grp != "Adults; no kids":
+                continue
+            if rc.category.name == 'Kid' and form.q_travel_grp != "Family; kids under 8":
+                continue
+            if rc.category.name == 'Large Group' and form.q_travel_grp != "Large Group, 6+":
+                continue
             if rc.category.name == 'Thrill' and not form.q_thrill_ride:
                 continue
             if rc.category.name == 'Dark' and not form.q_dark_ride:

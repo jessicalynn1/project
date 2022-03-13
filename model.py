@@ -3,7 +3,6 @@
 import datetime
 from flask_sqlalchemy import SQLAlchemy
 
-
 db = SQLAlchemy()
 
 
@@ -71,7 +70,7 @@ class Form(db.Model):
     q_must_ride_1 = db.Column(db.String)
     q_must_ride_2 = db.Column(db.String)
     q_must_ride_3 = db.Column(db.String)
-    time_created = db.column(db.DateTime(timezone=True))
+    # time_created = db.column(db.DateTime(timezone=True))
 
     user = db.relationship("User", backref="form")
 
@@ -113,6 +112,25 @@ class RideCategory(db.Model):
     def __repr__(self):
         return f'<RideCategory id={self.id} ride_id={self.ride_id} category_id={self.category_id}>'
 
+
+def example_data():
+    """Create some sample data."""
+
+    Category.query.delete()
+    Ride.query.delete()
+
+    adults = Category(name="Adults")
+    thrill = Category(name="Thrill")
+    kid = Category(name="Kid")
+
+    user = User(email="quorra@hotmail.com", password="1234")
+
+    hm = Ride(name="Haunted Mansion")
+    mb = Ride(name="Matterhorn Bobsleds")
+    mtp = Ride(name="Mad Tea Party")
+
+    db.session.add_all([adults, thrill, kid, hm, mb, mtp, user])
+    db.session.commit()
 
 def connect_to_db(app, db_uri="postgresql:///results", echo=False):
     """Connect the database to our Flask app."""
