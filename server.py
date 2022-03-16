@@ -36,7 +36,7 @@ def register_user():
         user = crud.create_user(email, password)
         db.session.add(user)
         db.session.commit()
-        flash ("Account created. Please log in.")
+        flash ("Account created! Please log in.")
     
     return redirect ("/")
 
@@ -49,19 +49,16 @@ def log_in():
     # hashed = bcrypt.hashpw(password, bcrypt.gensalt())
     
     user = crud.get_user_by_email(email)
-    user_profile = session.get("results", {})
+    # user_profile = session.get("results", {})
     
-    if user:
-        checked_user = crud.check_user_password(email, password)
-        if checked_user:
-            session['pkey'] = user.user_id
-            flash ("Success! You are logged in!")
-            return redirect("/user_homepage")
-        else:
-            flash ("Wrong password. Please try again.")
+    if not user or user.password != password:
+        flash("Your input does not match our records. Please try again.")
+
     else:
-        flash ("No match for email entered. Please create an account.")
-    
+        session["pkey"] = user.user_id
+        flash(f"Welcome back, {user.email}!")
+        return redirect("/user_homepage")
+   
     return redirect("/")
 
 @app.route("/logout")

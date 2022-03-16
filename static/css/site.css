@@ -1,27 +1,27 @@
 /* Headings */
 h1 {
-    font-family: 'Cursive', brushscript;
-    color: rgb(235, 155, 35);
+    font-family: 'Satisfy', cursive;
+    color: #136f94;
     font-size: 35px;
 }
 
 h2 {
-    font-family: 'Consolas', monospace;
-    color: rgb(2, 2, 12);
+    font-family: 'Roboto Condensed', sans-serif;
+    color: #136f94;
 }
 
 .container {
-    width: 100%;
+    width: auto;
     white-space: nowrap;
 }
 
 /* Body */
 body {
-    font-family: 'Consolas', monospace;
-    color: darkslategrey;
-    background-color: rgb(212, 234, 240);
+    font-family: 'Roboto Condensed', sans-serif;
+    color: rgb(111, 128, 128);
+    background-color: rgb(217, 231, 235);
     display:block;
-    width:100%;
+    width: auto;
     height:900px;
     overflow:scroll;
 }
@@ -38,13 +38,13 @@ img {
 .flash-msg {
     font-family: 'Consolas', monospace;
     color: #FFF;
-    background-color: #050e14;
+    background-color: FSEF87;
     font-size: 20px; line-height: 20px; padding: 10px;
 }
 
 /* Forms */
 input[type="text"] {
-    width: 200px;
+    width: auto;
     vertical-align: top;
 }
 
@@ -54,12 +54,12 @@ input[type="text"] {
 
 
 /* Button */
-.red_button {
-    color: rgba(238, 23, 33, 0.952); font-size: 30px; line-height: 24px; padding: 10px; border-top-left-radius: 8px; border-top-right-radius: 8px; border-bottom-right-radius: 8px; border-bottom-left-radius: 8px; font-family: Georgia, serif; font-weight: normal; text-decoration: none; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-variant-east-asian: normal; font-variant-position: normal; text-transform: none; background-image: linear-gradient(to right, rgb(28, 110, 164) 0%, rgb(35, 136, 203) 50%, rgb(20, 78, 117) 100%); box-shadow: rgb(0, 0, 0) 5px 5px 15px 5px; border: 2px solid rgb(28, 110, 164); display: inline-block;}
+.button {
+    color: rgba(163, 145, 146, 0.342); font-size: 30px; line-height: 24px; padding: 10px; border-top-left-radius: 8px; border-top-right-radius: 8px; border-bottom-right-radius: 8px; border-bottom-left-radius: 8px; font-family: Georgia, serif; font-weight: normal; text-decoration: none; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-variant-east-asian: normal; font-variant-position: normal; text-transform: none; background-image: linear-gradient(to right, rgb(28, 110, 164) 0%, rgb(35, 136, 203) 50%, rgb(20, 78, 117) 100%); box-shadow: rgb(0, 0, 0) 5px 5px 15px 5px; border: 2px solid rgb(28, 110, 164); display: inline-block;}
     .myButton:hover {
-    background: #1C6EA4; }
+    background: #69757c; }
     .myButton:active {
-    background: #071d2b; 
+    background: #708692; 
 }
 
 
