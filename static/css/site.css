@@ -30,8 +30,8 @@ body {
 img {
     display: block;
     object-fit: cover;
-    width: auto;
-    height:500px;
+    width: 8%;
+    height:8%;
 }
 
 /* Flash */

@@ -11,7 +11,7 @@ import json
 from pprint import pprint
 import bcrypt
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='/static') 
 app.secret_key = "dev"
 app.jinja_env.undefined = StrictUndefined
 
@@ -28,15 +28,18 @@ def register_user():
     email = request.form.get("email")
     password = request.form.get("password")
 
-    user_exist = crud.get_user_by_email(email)
-
-    if user_exist:
-        flash ("This email is already registered on our website. Please log in.")
+    if email == "" or password == "":
+        flash ("Not a valid email/password combination.")
     else:
-        user = crud.create_user(email, password)
-        db.session.add(user)
-        db.session.commit()
-        flash ("Account created! Please log in.")
+        user_exist = crud.get_user_by_email(email)
+
+        if user_exist:
+            flash ("This email is already registered on our website. Please log in.")
+        else:
+            user = crud.create_user(email, password)
+            db.session.add(user)
+            db.session.commit()
+            flash ("Account created! Please log in.")
     
     return redirect ("/")
 
@@ -250,6 +253,7 @@ def user_profile():
 
     form = Form.query.filter_by(user_id=session['pkey']).order_by(Form.id.desc()).first()
     saved_result = FormRide.query.filter_by(form_id=form.id).all()
+    print(form)
 
     ride_dict = {}
 
