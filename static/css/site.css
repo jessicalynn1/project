@@ -7,12 +7,12 @@ h1 {
 
 h2 {
     font-family: 'Roboto Condensed', sans-serif;
-    color: #136f94;
+    color: #ffc9d4;
 }
 
 .container {
     width: auto;
-    white-space: nowrap;
+    white-space: normal;
 }
 
 /* Body */
@@ -26,10 +26,36 @@ body {
     overflow:scroll;
 }
 
+.body-div {
+    margin: 10px;
+    height: 500px;
+    width: 500px;
+    display: inline-block;
+}
+
+.row {
+    width: 50%;
+    height: 100%;
+}
+
+.row-div {
+    width: 100%;
+    height: 50%;
+    float: left;
+}
+
 /* Image */
 img {
     display: block;
     object-fit: cover;
+    width: 50%;
+    height:50%;
+}
+
+/* Logo */
+.logo {
+    display: block;
+    object-fit: contain;
     width: 8%;
     height:8%;
 }
@@ -37,7 +63,7 @@ img {
 /* Flash */
 .flash-msg {
     font-family: 'Consolas', monospace;
-    color: #FFF;
+    color: #136f94;
     background-color: FSEF87;
     font-size: 20px; line-height: 20px; padding: 10px;
 }
@@ -46,10 +72,6 @@ img {
 input[type="text"] {
     width: auto;
     vertical-align: top;
-}
-
-.form-control {
-    width: 100px;
 }
 
 

@@ -29,14 +29,14 @@
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
       {% if "pkey" in session %}
-      <a class="navbar-brand" href="/user_profile"> <img src="/static/img/dddlogo.png" alt="logo"> </a>
+      <a class="navbar-brand" href="/user_profile"> <img src="/static/img/dddlogo3.png" alt="logo" class="logo"> </a>
       {% else %}
-      <a class="navbar-brand" href="/"> <img src="/static/img/dddlogo.png" alt="logo"> </a>
+      <a class="navbar-brand" href="/"> <img src="/static/img/dddlogo3.png" alt="logo" class="logo"> </a>
       {% endif %}
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup" style="float: left;">
         <div class="navbar-nav">
           <a class="nav-link active" aria-current="page" href="/">Home</a>
           {% if "pkey" in session %}
