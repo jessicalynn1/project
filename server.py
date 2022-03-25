@@ -59,7 +59,7 @@ def log_in():
 
     else:
         session["pkey"] = user.user_id
-        flash(f"Welcome back, {user.email}!")
+        flash(f"Welcome, {user.email}!")
         return redirect("/user_homepage")
    
     return redirect("/")

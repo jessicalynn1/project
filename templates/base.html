@@ -33,16 +33,16 @@
       {% else %}
       <a class="navbar-brand" href="/"> <img src="/static/img/dddlogo3.png" alt="logo" class="logo"> </a>
       {% endif %}
+      <a class="nav-link active" aria-current="page" href="/">Home</a>
+      {% if "pkey" in session %}
+      <a class="nav-link active" href="/user_profile">See Saved</a>
+      <a class="nav-link active" href="/form">Create New</a>
+      {% endif %}
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="navbarNavAltMarkup" style="float: left;">
-        <div class="navbar-nav">
-          <a class="nav-link active" aria-current="page" href="/">Home</a>
-          {% if "pkey" in session %}
-          <a class="nav-link" href="/user_profile">See Saved</a>
-          <a class="nav-link" href="/form">Create New</a>
-          {% endif %}
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup" style="float: left; justify-content: end;">
+
 
     <div class="navbar-nav justify-content-end">
       {% if "pkey" in session %}
@@ -54,7 +54,7 @@
             <a class="nav-link mr-auto" href="/" data-bs-toggle="modal" data-bs-target="#modal-sign-up">SignUp/Login</a>
             </li>
             {% endif %}
-
+      </div>
       </div>
   </div>
   </div>

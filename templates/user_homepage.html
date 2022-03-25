@@ -5,30 +5,58 @@
 
 {% block body %}
 
-<!-- maybe put these into two divs and have them side by side overlapping the carousel of images -->
+<body>
+    <section>
+    <div class="container">
+        <div class="col1">
+            <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                  <div class="carousel-item active">
+                    <img src="/static/img/whaleteeth.jpg" class="d-block w-50" alt="whaleteeth">
+                  </div>
+                  <div class="carousel-item">
+                    <img src="/static/img/club33.jpg" class="d-block w-50" alt="club33">
+                  </div>
+                  <div class="carousel-item">
+                    <img src="/static/img/treats2.jpg" class="d-block w-50" alt="treats2">
+                  </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                  </button>
+                  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                  </button>
+                </div>
+                </div>
 
 
+    <div class="col2">
 {% if  form %}
-
 <h2> Would you like to see your saved itinerary? </h2>
     
-    <p> <a href=user_profile > <button style="height:75px;width:150px"> Click here </button></a> </p>
-
+    <p> <a href=user_profile > <button class="button"> Click for saved </button></a> </p>
     <br>
 
 <h2> Would you like to create a new itinerary? </h2>
     
-    <p> <a href=form > <button style="height:75px;width:150px"> Click for new </button></a> </p>
-
+    <p> <a href=form > <button class="button"> Click for new </button></a> </p>
     <br>
- {% else %}
 
+ {% else %}
  <h2> Would you like to create a new itinerary? </h2>
     
-    <p> <a href=form > <button style="height:75px;width:150px"> Click for new </button></a> </p>
-
+    <p> <a href=form > <button class="button"> Click for new </button></a> </p>
     <br>
 
 {% endif %}
+
+    </div>
+    </div>
+
+    </section>
+    </body>
 
 {% endblock %}

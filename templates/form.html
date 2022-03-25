@@ -1,13 +1,75 @@
 {% extends 'base.html' %}
 
 {% block body %}
-  <h1> Welcome, let's plan your dream day! </h1>
 
-    <h3>Please fill out the form below.</h3>
-  
-    <body>
-    <form action="results" method="POST">
-  
+<!-- <br>
+<h1> Welcome, let's plan your dream day! </h1>
+<br>
+<h4>Please fill out the form below.</h4> -->
+
+<body>
+    <section>
+    <div class="container">
+        <div class="col1">
+             <h1> Welcome, let's plan your dream day! </h1>
+            <br>
+            <h4>Please fill out the form below.</h4>
+
+            <form action="results" method="POST">
+                <br>
+                First, what do you want to name your trip?
+                <br>
+                ex. "Besties Girl Trip!" or "Taylor Family Reunion 2021"
+                <br>
+                <input type="text" name="trip-name">
+                <br>
+        
+                <br>
+                <p>Tell me about your travel group.</p>
+            
+                <select name='q_travel_grp'>
+                <option value="Adults; no kids">Adults; no kids</option>
+                <option value="Family; kids under 8">Family; kids under 8</option>
+                <option value="Family; kids over 8">Family; kids over 8</option>
+                <option value="Large group, 6+">Large group, 6+</option>
+            </select>
+
+            <br>
+            <br>
+            <p>
+                What will the weather be like?</p>
+        
+            <input type="radio" id="warm-weather" name="q_weather" value="hot">
+                <label> Sunny and warm </label>
+            <input type="radio" id="cool-weather" name="q_weather" value="not hot">
+                <label> Cool and cloudy </label>
+
+
+            <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                  <div class="carousel-item active">
+                    <img src="/static/img/bengalbbq.jpg" class="d-block w-50" alt="bengalbbq">
+                  </div>
+                  <div class="carousel-item">
+                    <img src="/static/img/columbiaship.jpg" class="d-block w-50" alt="columbiaship">
+                  </div>
+                  <div class="carousel-item">
+                    <img src="/static/img/castle60.jpg" class="d-block w-50" alt="castle60">
+                  </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                  </button>
+                  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                  </button>
+                </div>
+
+
+
+    <!-- <form action="results" method="POST">
         <br>
         First, what do you want to name your trip?
         <br>
@@ -23,10 +85,14 @@
         <option value="Family; kids under 8">Family; kids under 8</option>
         <option value="Family; kids over 8">Family; kids over 8</option>
         <option value="Large group, 6+">Large group, 6+</option>
-    </select>
+    </select> -->
     <br>
+</div>
 
-    <p>
+    <div class="col2">
+    <br>
+    <br>
+        <!-- <p>
         What will the weather be like?</p>
 
     <input type="radio" id="warm-weather" name="q_weather" value="hot">
@@ -34,16 +100,18 @@
     <input type="radio" id="cool-weather" name="q_weather" value="not hot">
         <label> Cool and cloudy </label>
     <br>
+    <br> -->
 
     <p>
         Do you like dark rides?
     <br>
-    for example: Haunted Mansion, The Many Adventures of Winnie the Pooh, Peter Pan's Flight</p>
+    for example: Haunted Mansion, Peter Pan's Flight</p>
 
     <input type="radio" id="yes-dark" name="q_dark_ride" value=True>
         <label> Yes </label>
     <input type="radio" id="no-dark" name="q_dark_ride" value=False>
         <label> No </label>
+    <br>
     <br>
 
     <p>
@@ -56,17 +124,18 @@
     <input type="radio" id="no-thrill" name="q_thrill_ride" value=False>
         <label> No </label>
     <br>
-    
+    <br>
 
     <p>
         Do you get motion sick easily?
     <br>
-    for example: Mad Tea Party, Finding Nemo Submarine Voyage, Star Tours - The Adventures Continue</p>
+    for example: Mad Tea Party, Star Tours - The Adventures Continue</p>
 
     <input type="radio" id="yes-sick" name="q_motion_sick" value=True>
         <label> Yes </label>
     <input type="radio" id="no-sick" name="q_motion_sick" value=False>
         <label> No </label>
+    <br>
     <br>
 
 
@@ -96,5 +165,6 @@
 
     <p><input type="submit" value="Submit"></p>
   </form>
+  </div>
 </body>
 {% endblock %}

@@ -5,15 +5,40 @@
 {% block title %} Welcome! {% endblock %}
 
 {% block body %}
+<body>
+<div class="container">
 
-
-    <body>
     <section id="ride_dict">
+
+      <div class="col1">
+        <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel" class="row">
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <img src="/static/img/waltmickey.jpg" class="d-block w-50" alt="waltmickey">
+            </div>
+            <div class="carousel-item">
+              <img src="/static/img/starswars1.jpg" class="d-block w-50" alt="starwars1">
+            </div>
+            <div class="carousel-item">
+              <img src="/static/img/villagehaus.jpg" class="d-block w-50" alt="villagehaus">
+            </div>
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+        </div>
+        
+        <div class="col2">
         <h1>Here is your saved itinerary: </h1>
         <ol id="result">
-
             <br>
-            <body>
+
                 <ul id="itinerary-body">
                     {% for k, v in ride_dict.items() %}
                       <li> {{ k }}</li>
@@ -27,7 +52,11 @@
         <br>
         <h3>We hope you have a magical day at the happiest place on earth! </h3>
 
+          </div>
+        </div>
+      </div>
+    </div>
+  <!-- </div> -->
+
 {% endblock %}
 
-<!-- other option -->
-<!-- could use nav bar new trip, profile, log out/in -->

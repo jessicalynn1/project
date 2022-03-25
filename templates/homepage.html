@@ -3,11 +3,21 @@
 {% extends 'base.html' %}
 
 {% block body %}
-  <h1>Welcome to your Dream Disney Day!</h1>
 
-  <!-- maybe have a carousel of images scrolling through above this text -->
-<body>
-  <div class="body-div" display="inline-block">
+  <body>
+    <section>
+<div class="container">
+    <div class="col1">
+        <br>
+        <h1>Welcome to your Dream Disney Day!</h1>
+  <img src="/static/img/smallworldmedres.gif" alt="smallworldgif">
+</div>
+
+
+<div class="col3">
+  <br>
+  <br>
+  <br>
   <h2>Create an Account</h2>
   <form action="/users" method="POST">
     <p>
@@ -23,6 +33,7 @@
     </p>
   </form>
 
+  <br>
   <h2>Log In</h2>
   <form action="/login" method="POST">
     <p>
@@ -36,7 +47,10 @@
     <p>
       <input type="submit">
     </p>
-  </form>
-</div>
+      </form>
+    </div>
+
+    </div>
+  </section>
 </body>
 {% endblock %}
