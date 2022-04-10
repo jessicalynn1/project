@@ -49,10 +49,8 @@ def log_in():
     
     email = request.form.get("email")
     password = request.form.get("password")
-    # hashed = bcrypt.hashpw(password, bcrypt.gensalt())
     
     user = crud.get_user_by_email(email)
-    # user_profile = session.get("results", {})
     
     if not user or user.password != password:
         flash("Your input does not match our records. Please try again.")
@@ -205,7 +203,7 @@ def results_page():
 
     new_profile = Form(user_id=session['pkey'], q_travel_grp=a_travel_grp, q_weather=a_weather, q_dark_ride=a_dark_ride,
                         q_thrill_ride=a_thrill_ride, q_motion_sick=a_motion_sick, q_foodie=a_foodie, q_must_ride_1=must_ride_1,
-                        q_must_ride_2=must_ride_2, q_must_ride_3=must_ride_3)   #need to add datetime??    
+                        q_must_ride_2=must_ride_2, q_must_ride_3=must_ride_3) 
     db.session.add(new_profile)
     db.session.commit()
 
@@ -253,7 +251,6 @@ def user_profile():
 
     form = Form.query.filter_by(user_id=session['pkey']).order_by(Form.id.desc()).first()
     saved_result = FormRide.query.filter_by(form_id=form.id).all()
-    print(form)
 
     ride_dict = {}
 
