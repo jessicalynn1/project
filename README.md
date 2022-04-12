@@ -4,7 +4,7 @@ Welcome to Dream Disney Day! The answer to the age old dilemma for all Disneylan
 
 On the landing page you are greeted with my son's sweet face as he looks around at everything to see on 'it's a small world' on his first trip on the ride. Next you are prompted to either create a new account or login to an existing account. After login you will be asked if you'd like to see your saved itinerary from a previous login or create a new itinerary. The next page is the form which asks you a series of questions about your travel plans and preferences. This form submission then takes you to your Dream Disney Day! The user can see their most recent saved itinerary at the 'See Saved' tab so they can access their itinerary whenever they want.
 
-![waltmickey](/static/img/waltmickey.jpg "waltmickey")
+![videothumbnail](/static/img/videothumbnail.png "videothumbnail")
 
 **CONTENTS**
 
