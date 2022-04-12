@@ -27,7 +27,7 @@ On the landing page you are greeted with my son's sweet face as he looks around 
 
 Users can login and see their previous saved itinerary.
 
-### REPEAT THE FORM
+### MULTIPLE FORM SUBMISSIONS
 
 A user can log in and fill out the form as many times as they'd like. If their travel plans change or they're planning a new trip, they can change their answers on the form to get new results.
 
@@ -82,7 +82,7 @@ Navigate to `localhost:5000/` to plan your Dream Disney Day!
 
 ## About the Developer
 
-Jessica Faylor is a software engineer in the Greater San Diego Area, and previously worked in various fields, inclduing finance, accounting and administration. A combined love for family time, learning new things, and all things Disney, led to the creation of Dream Disney Day, her capstone project for Hackbright Academy.
+Jessica Faylor is a software engineer in the Greater San Diego Area, and previously worked in various fields, including finance, accounting and administration. A combination of her love for family time, learning new things, and all things Disney, led to the creation of Dream Disney Day, her capstone project for Hackbright Academy.
 
 Let's connect!
 
